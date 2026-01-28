@@ -1,0 +1,5 @@
+/* Increase the size of the logo (both light and dark modes) */
+.nav-logo {
+  height: 50px;  
+  width: auto;   
+}
