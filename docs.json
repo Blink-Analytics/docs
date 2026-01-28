@@ -9,20 +9,6 @@
   },
   "favicon": "/images/Serin_Logo.png",
   "navigation": {
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "icon": "book-open-cover",
-          "href": "https://mintlify.com/docs"
-        },
-        {
-          "anchor": "Blog",
-          "icon": "newspaper",
-          "href": "https://mintlify.com/blog"
-        }
-      ]
-    },
     "tabs": [
       {
         "tab": "Guides",
@@ -30,9 +16,8 @@
           {
             "group": "Getting started",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              "getting-started/introduction",
+              "getting-started/quickstart"
             ]
           },
           {
@@ -60,12 +45,18 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "Changelog",
+        "pages": [
+          "changelog"
+        ]
       }
     ]
   },
   "logo": {
-    "light": "logo/Serin_Logo_TR_Black_v0.3.png",
-    "dark": "logo/Serin Logo_TR_White_v0.2_1040x400.png",
+    "light": "/logo/Serin_Logo_TR_Black_v0.3.png",
+    "dark": "/logo/Serin Logo_TR_White_v0.2_1040x400.png",
     "href": "https://www.serin-ai.com/"
   },
   "navbar": {
