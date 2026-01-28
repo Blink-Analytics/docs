@@ -65,7 +65,7 @@
   },
   "logo": {
     "light": "/images/Serin_Logo_TR_Black_v0.2_1040x520.png",
-    "dark": "/images/Serin_Icon_TR_White_v0.2.ico",
+    "dark": "/logo/dark.svg",
     "href": "https://www.serin-ai.com/"
   },
   "navbar": {
