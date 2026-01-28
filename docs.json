@@ -1,13 +1,13 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Serin Docs",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#355CC3",
+    "light": "#355CC3",
+    "dark": "#355CC3"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/images/Serin_Logo.png",
   "navigation": {
     "tabs": [
       {
@@ -84,8 +84,9 @@
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/images/Serin_Logo.png",
+    "dark": "/images/Serin_Logo.png",
+    "href": "https://www.serin-ai.com/"
   },
   "navbar": {
     "links": [
@@ -112,11 +113,37 @@
      "vscode"
    ]
   },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+  "background": {
+    "decoration": "gradient"
+  },
+  "appearance": {
+    "default": "dark"
+  },
+  "fonts": {
+    "family": "Geist",
+    "weight": 300,
+    "format": "woff",
+    "heading": {
+      "family": "Playfair Display",
+      "weight": 400
+    },
+    "body": {
+      "family": "Geist",
+      "weight": 300
     }
-  }
+  },
+  "thumbnails": {
+    "appearance": "dark",
+    "background": "/images/Serin_Banner.png",
+    "fonts": {
+      "family": "Playfair Display"
+    }
+  },
+  "styling": {
+    "eyebrows": "breadcrumbs"
+  },
+  "icons": {
+    "library": "lucide"
+  },
+  "description": "Documentation for Serin, the future of Hiring"
 }
