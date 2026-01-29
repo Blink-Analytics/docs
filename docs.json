@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "maple",
   "name": "Serin Docs",
   "colors": {
     "primary": "#355CC3",
@@ -21,27 +21,17 @@
             ]
           },
           {
-            "group": "Customization",
+            "group": "Using Serin",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "using-serin/create-job",
+              "using-serin/invite-candidate",
+              "using-serin/view-analysis"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "Reports",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "reports/understanding-report"
             ]
           }
         ]
@@ -63,29 +53,25 @@
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:connect@serin-ai.com"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "href": "https://serin-ai.com/job"
     }
   },
   "contextual": {
     "options": [
      "copy",
-     "view",
      "chatgpt",
      "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
+     "perplexity"
    ]
   },
   "background": {
-    "decoration": "gradient"
+    "decoration": "grid"
   },
   "appearance": {
     "default": "dark"

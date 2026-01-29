@@ -3,3 +3,26 @@
   height: 50px;  
   width: auto;   
 }
+
+/* Force page title to use Playfair Display */
+#page-title {
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 500 !important;  /* Matches docs.json weight */
+  font-size: 2.5rem;
+}
+
+#the-problem {
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 400 !important;  /* Matches docs.json weight */
+}
+
+#the-approach {
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 400 !important;  /* Matches docs.json weight */
+}
+
+#the-outcome {
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 400 !important;  /* Matches docs.json weight */
+}
+
