@@ -71,7 +71,7 @@
    ]
   },
   "background": {
-    "decoration": "grid"
+    "decoration": "gradient"
   },
   "appearance": {
     "default": "dark"
@@ -102,5 +102,10 @@
   "icons": {
     "library": "lucide"
   },
-  "description": "Documentation for Serin, the future of Hiring"
+  "description": "Documentation for Serin, the future of Hiring",
+  "seo": {
+    "metatags": {
+        "canonical": "https://www.docs.serin-ai.com"
+    }
+}
 }
