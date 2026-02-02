@@ -7,22 +7,66 @@
 /* Force page title to use Playfair Display */
 #page-title {
   font-family: 'Playfair Display', serif !important;
-  font-weight: 500 !important;  /* Matches docs.json weight */
+  font-weight: 500 !important;  
   font-size: 2.5rem;
 }
 
 #the-problem {
   font-family: 'Playfair Display', serif !important;
-  font-weight: 400 !important;  /* Matches docs.json weight */
+  font-weight: 400 !important;  
 }
 
 #the-approach {
   font-family: 'Playfair Display', serif !important;
-  font-weight: 400 !important;  /* Matches docs.json weight */
+  font-weight: 400 !important;  
 }
 
 #the-outcome {
   font-family: 'Playfair Display', serif !important;
-  font-weight: 400 !important;  /* Matches docs.json weight */
+  font-weight: 400 !important;  
 }
 
+#select-your-role {
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 400 !important;  
+}
+
+#complete-your-onboarding {
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 400 !important;  
+}
+
+#improve-your-profile {
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 400 !important;  
+}
+
+#add-resumes {
+  font-family: 'Geist', serif;
+  font-weight: 200;  
+}
+
+#connect-your-accounts {
+  font-family: 'Geist', serif;
+  font-weight: 200;  
+}
+
+#faq {
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 400 !important;  
+}
+
+#organization {
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 400 !important;  
+}
+
+#organization-member-roles {
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 200 !important;  
+}
+
+#talent {
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 400 !important;  
+}

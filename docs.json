@@ -17,7 +17,8 @@
             "group": "Getting started",
             "pages": [
               "getting-started/introduction",
-              "getting-started/quickstart"
+              "getting-started/quickstart",
+              "getting-started/roles"
             ]
           },
           {
@@ -107,5 +108,39 @@
     "metatags": {
         "canonical": "https://www.docs.serin-ai.com"
     }
+},
+"footer": {
+  "socials": {
+    "x": "https://x.com",
+    "instagram": "https://instagram.com"
+  },
+  "links": [
+    {
+      "header": "Resources",
+      "items": [
+        {
+      "label": "Serin Home",
+      "href": "https://serin-ai.com/"
+    },
+    {
+      "label": "Features",
+      "href": "https://serin-ai.com/#features"
+    }
+      ]
+    },
+    {
+      "header": "Connect",
+      "items": [
+        {
+      "label": "Email",
+      "href": "mailto:connect@serin-ai.com"
+    },
+    {
+      "label": "Contact Us",
+      "href": "https://serin-ai.com/#contact"
+    }
+      ]
+    }        
+  ]
 }
 }
