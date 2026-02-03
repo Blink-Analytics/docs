@@ -66,6 +66,21 @@
   font-weight: 200 !important;  
 }
 
+[id="1-admin"]{
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 200 !important;  
+}
+
+[id="2-manager"]{
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 200 !important;  
+}
+
+[id="3-member"]{
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 200 !important;  
+}
+
 #talent {
   font-family: 'Playfair Display', serif !important;
   font-weight: 400 !important;  
