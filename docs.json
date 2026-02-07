@@ -28,12 +28,6 @@
               "using-serin/invite-candidate",
               "using-serin/view-analysis"
             ]
-          },
-          {
-            "group": "Reports",
-            "pages": [
-              "reports/understanding-report"
-            ]
           }
         ]
       },
