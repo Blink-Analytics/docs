@@ -2,50 +2,12 @@
   <img src="/images/Serin_Banner.png" alt="Serin Docs Banner">
 </p>
 
-# Serin Documentation
+<h1 align="center">Serin Documentation</h1>
 
-Serin is designed to be a bridge between talent and opportunity.  
-This documentation exists to make that bridge clear, reliable, and easy to navigate for everyone who uses the platform.
+<p align="justify">
+Serin is built to connect talent with opportunity in a clear and structured way. This documentation exists to make the platform easy to understand and easy to use. It explains how Serin works, how each feature supports the hiring process, and how organizations can set up and manage their workflows with confidence.
 
-## Why This Docs Platform Exists
+Here, you will find practical guides for creating and managing jobs, understanding AI interviews, structuring hiring pipelines, and using analytics to make informed decisions. Everything is written to be straightforward and actionable so teams can move from setup to execution without confusion.
 
-We built Serin to simplify hiring, but simplicity only works when people understand how to use the system effectively.  
-This docs web app is the place where everything about Serin is explained in a structured and practical way.
-
-It helps you:
-
-- Understand how Serin works  
-- Learn how each feature fits into the hiring workflow  
-- Set up and manage your organization with confidence  
-- Use AI interviews and analytics effectively  
-
-Instead of trial and error, the goal is to give you clarity from the start.
-
-## What You’ll Find Here
-
-This documentation is designed to act as a single source of truth for the platform.
-
-Inside, you will find:
-
-- Clear guides for creating and managing jobs  
-- Explanations of how AI interviews evaluate candidates  
-- Best practices for structuring roles and hiring pipelines  
-- Insights into how Serin uses data to improve decision making  
-- Step-by-step walkthroughs for common workflows  
-
-Each section is written to help both technical and non-technical users understand the system without friction.
-
-## The Bigger Purpose
-
-Serin is not just about automating hiring.  
-It is about making sure the right skills are able to connect with the right opportunities without unnecessary noise.
-
-This documentation supports that mission by ensuring:
-
-- Organizations know how to use the platform effectively  
-- Teams can trust the system’s decisions and insights  
-- Every feature is used as intended  
-
-When the platform is understood, it stays out of the way — and the focus returns to what actually matters: people and their abilities.
-
----
+Serin is not just about automating hiring. It is about helping the right skills find the right demand without unnecessary complexity. When the system is clearly understood, it stays out of the way, allowing organizations to focus on what truly matters: evaluating people based on their abilities.
+</p>
