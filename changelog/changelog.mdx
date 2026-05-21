@@ -3,6 +3,137 @@ title: "Product Updates"
 description: "Get started with Serin by choosing your role and setting up your account."
 icon: "star"
 ---
+<Update label="20th May, 2026" description="The Tempering Update" tags={["Serin v1.4.3"]}>
+<Frame>
+    ![Serin v1.4 Update Image](/images/changelog/Serin_v1.4_Update_Image_v0.2.png)
+  </Frame>
+
+# New Features
+
+1. **Network Monitoring During Interviews**  
+   Organization representatives can now monitor a candidate’s network stability during Serin interviews.
+
+2. **Enhanced Filtering System**  
+   Filters across the **My Jobs**, **Marketplace**, and **My Applications** pages have been expanded to support filtering by:
+   - Job location
+   - Employment type (Full-Time, Part-Time, etc.)
+   - Salary range
+   - Experience flexibility
+
+   Session analysis filters have also been improved to:
+   - Filter candidates based on whether they have completed an interview
+   - Update the **Interview Status** filter to use actual interview states instead of ascending/descending sorting
+
+3. **Serin Question Display UI**  
+   Added a dedicated UI component to display interview questions above the interview interaction pill.
+
+4. **Microphone and Network Testing During Interview Setup**  
+   The interview setup flow now includes enhanced microphone quality testing and real-time network connection checks before the interview begins.
+
+5. **Automatic Fullscreen Interview Mode**  
+   The interview room now automatically enters fullscreen mode once the candidate completes the setup phase and joins the interview session.
+
+6. **Multiple Display Detection**  
+   The interview setup process now detects multiple connected displays and prevents the interview from starting if more than one display is active. Interviews are also automatically terminated if an external display is connected during an active session.
+
+7. **Gaze Detection**  
+   Added gaze detection capabilities to flag moments where candidates look away from the active display during interviews.
+
+# Feature Updates
+
+1. **Interview Session Termination Enhancements**  
+   The interview countdown timer now changes color dynamically based on the remaining interview duration. The interview agent also alerts candidates when limited time remains, encouraging faster responses.
+
+2. **Email Bounce Monitoring**  
+   Organizations are now notified when emails sent to candidates or organization members fail to deliver or bounce.
+
+3. **Resume Screening Failure UI**  
+   Updated the resume screening failure interface with a more destructive visual design and contextual warning iconography for clearer communication.
+
+4. **Job Location Validation Updates**  
+   If a job is marked as **Onsite**, organization representatives are now required to specify the city, state, and country for the role location.
+
+5. **Interview Setup Room UI Refresh**  
+   The interview setup room has been redesigned with a modern dark-themed interface focused on simplicity and usability.
+
+6. **Enhanced Object Detection**  
+   Object detection capabilities have been expanded to detect multiple individuals as well as electronic devices during interview sessions.
+  
+# Bugs Fixed
+
+- Fixed a production issue where users saw an “Error” notification below the password field after signing in successfully. The notification now correctly displays: “Successfully Signed In, Redirecting to Dashboard…”
+
+- Fixed an issue where candidates viewing a specific job application were redirected to the Marketplace page when pressing the browser back button. Users are now correctly redirected to the Applications page.
+
+- Fixed an issue where organization representatives were unable to send email updates to candidates who had already been invited to a job.
+
+- Fixed a security issue where API responses for all requests made on a page were visible within the browser network response payloads.
+
+- Fixed an issue where recruiters and organization representatives testing their own jobs were permanently blocked after failing resume threshold screening. Organization users can now continue testing their jobs even if their resume fails the screening criteria.
+
+- Fixed an issue where the detailed interview report view lost its UI state after switching tabs. Open monitoring and analysis side panels now persist correctly when navigating between tabs such as “Connect” and returning to the report view.
+
+- Fixed an issue where the Download Report button appeared immediately after interview completion, even before report generation was finished. The button is now displayed only after the report has been fully generated.
+</Update>
+
+
+<Update label="1st April, 2026" description="The Tempering Update" tags={["Serin v1.4.2"]}>
+<Frame>
+    ![Serin v1.4 Update Image](/images/changelog/Serin_v1.4_Update_Image_v0.2.png)
+  </Frame>
+
+# New Features
+
+1. **Schedule Zoom Meetings**  
+   Organization representatives can now schedule Zoom meetings directly with candidates.
+
+2. **Retry Interviews**  
+   Organization representatives can now allow candidates to retry Serin interviews.
+
+# Feature Updates
+
+1. **OTP-Based Authentication**  
+   Authentication has been updated to use OTP verification instead of email-based sign-in links.
+
+2. **Improved Forgot Password Flow**  
+   The email address is now automatically carried forward during the password reset process, eliminating the need for users to re-enter it after clicking “Forgot Password.”
+
+  
+# Bugs Fixed
+
+- Fixed an issue where signed-in users navigating to the Jobs page from the landing page were shown their personal jobs instead of marketplace jobs. The Jobs page now correctly displays marketplace listings.
+
+- Updated the interview agent flow so the interview now begins with a warm greeting directly, instead of asking the candidate for permission to begin.
+
+- Fixed an issue where the interview agent repeated the first interview question at the beginning of the session.
+
+- Fixed an issue where the interview agent asked multiple questions in a single turn and generated overly long prompts, causing candidates to lose context. Responses are now shorter, limited in length, and restricted to one question per turn.
+
+- Reduced microphone sensitivity so Serin responds primarily to human speech instead of background noise. This fix has been applied to both Serin and Serin Education.
+
+- Fixed a mobile issue where refreshing the page during an interview required pressing the refresh button twice to exit the session. The interview now exits correctly on the first refresh attempt. This fix has been applied to both Serin and Serin Education.
+
+- Fixed an issue where the Serin logo icons in the navigation bar were not rendering correctly for signed-up users on the waitlist. This fix has been applied to both Serin and Serin Education.
+
+- Fixed an issue in the updated profile section where resumes were not visible on the first click and only appeared after a second interaction.
+
+- Fixed unnecessary background re-rendering in the interview setup room caused by microphone input changes. The background is now independent of microphone state updates.
+
+- Fixed an issue where organization representatives associated with multiple organizations experienced organization switching after changing browser tabs. The selected organization in the navigation bar now persists correctly.
+
+- Fixed an issue where revoking one member’s organization invite changed the state of all revoke buttons in the list. Button state updates are now isolated to the selected member only.
+
+- Fixed an issue where the text “temporary” incorrectly appeared after saving a job with the “Intern-Part Time” employment type selected.
+
+- Fixed an issue where the Total Candidates KPI on the job dashboard did not update based on the selected organization. KPI values are now filtered correctly according to the active organization.
+
+- Fixed an issue where resume thresholding values configured during job creation were not persisting after saving.
+
+- Fixed inaccurate timestamps in conversation transcripts. Transcript timestamps now update correctly based on elapsed conversation time.
+
+</Update>
+
+
 <Update label="11th March, 2026" description="The Tempering Update" tags={["Serin v1.4.1"]}>
 <Frame>
     ![Serin v1.4 Update Image](/images/changelog/Serin_v1.4_Update_Image_v0.2.png)
