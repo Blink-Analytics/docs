@@ -9,14 +9,71 @@ icon: "star"
   </Frame>
 
 # New Features
-1) 
+
+1. **Network Monitoring During Interviews**  
+   Organization representatives can now monitor a candidate’s network stability during Serin interviews.
+
+2. **Enhanced Filtering System**  
+   Filters across the **My Jobs**, **Marketplace**, and **My Applications** pages have been expanded to support filtering by:
+   - Job location
+   - Employment type (Full-Time, Part-Time, etc.)
+   - Salary range
+   - Experience flexibility
+
+   Session analysis filters have also been improved to:
+   - Filter candidates based on whether they have completed an interview
+   - Update the **Interview Status** filter to use actual interview states instead of ascending/descending sorting
+
+3. **Serin Question Display UI**  
+   Added a dedicated UI component to display interview questions above the interview interaction pill.
+
+4. **Microphone and Network Testing During Interview Setup**  
+   The interview setup flow now includes enhanced microphone quality testing and real-time network connection checks before the interview begins.
+
+5. **Automatic Fullscreen Interview Mode**  
+   The interview room now automatically enters fullscreen mode once the candidate completes the setup phase and joins the interview session.
+
+6. **Multiple Display Detection**  
+   The interview setup process now detects multiple connected displays and prevents the interview from starting if more than one display is active. Interviews are also automatically terminated if an external display is connected during an active session.
+
+7. **Gaze Detection**  
+   Added gaze detection capabilities to flag moments where candidates look away from the active display during interviews.
 
 # Feature Updates
-1) 
-  
-# Bugs Fixed:
-- 
 
+1. **Interview Session Termination Enhancements**  
+   The interview countdown timer now changes color dynamically based on the remaining interview duration. The interview agent also alerts candidates when limited time remains, encouraging faster responses.
+
+2. **Email Bounce Monitoring**  
+   Organizations are now notified when emails sent to candidates or organization members fail to deliver or bounce.
+
+3. **Resume Screening Failure UI**  
+   Updated the resume screening failure interface with a more destructive visual design and contextual warning iconography for clearer communication.
+
+4. **Job Location Validation Updates**  
+   If a job is marked as **Onsite**, organization representatives are now required to specify the city, state, and country for the role location.
+
+5. **Interview Setup Room UI Refresh**  
+   The interview setup room has been redesigned with a modern dark-themed interface focused on simplicity and usability.
+
+6. **Enhanced Object Detection**  
+   Object detection capabilities have been expanded to detect multiple individuals as well as electronic devices during interview sessions.
+  
+# Bugs Fixed
+
+- Fixed a production issue where users saw an “Error” notification below the password field after signing in successfully. The notification now correctly displays: “Successfully Signed In, Redirecting to Dashboard…”
+
+- Fixed an issue where candidates viewing a specific job application were redirected to the Marketplace page when pressing the browser back button. Users are now correctly redirected to the Applications page.
+
+- Fixed an issue where organization representatives were unable to send email updates to candidates who had already been invited to a job.
+
+- Fixed a security issue where API responses for all requests made on a page were visible within the browser network response payloads.
+
+- Fixed an issue where recruiters and organization representatives testing their own jobs were permanently blocked after failing resume threshold screening. Organization users can now continue testing their jobs even if their resume fails the screening criteria.
+
+- Fixed an issue where the detailed interview report view lost its UI state after switching tabs. Open monitoring and analysis side panels now persist correctly when navigating between tabs such as “Connect” and returning to the report view.
+
+- Fixed an issue where the Download Report button appeared immediately after interview completion, even before report generation was finished. The button is now displayed only after the report has been fully generated.
 </Update>
 
 
