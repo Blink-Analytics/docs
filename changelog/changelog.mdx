@@ -3,6 +3,80 @@ title: "Product Updates"
 description: "Get started with Serin by choosing your role and setting up your account."
 icon: "star"
 ---
+<Update label="20th May, 2026" description="The Tempering Update" tags={["Serin v1.4.3"]}>
+<Frame>
+    ![Serin v1.4 Update Image](/images/changelog/Serin_v1.4_Update_Image_v0.2.png)
+  </Frame>
+
+# New Features
+1) 
+
+# Feature Updates
+1) 
+  
+# Bugs Fixed:
+- 
+
+</Update>
+
+
+<Update label="1st April, 2026" description="The Tempering Update" tags={["Serin v1.4.2"]}>
+<Frame>
+    ![Serin v1.4 Update Image](/images/changelog/Serin_v1.4_Update_Image_v0.2.png)
+  </Frame>
+
+# New Features
+
+1. **Schedule Zoom Meetings**  
+   Organization representatives can now schedule Zoom meetings directly with candidates.
+
+2. **Retry Interviews**  
+   Organization representatives can now allow candidates to retry Serin interviews.
+
+# Feature Updates
+
+1. **OTP-Based Authentication**  
+   Authentication has been updated to use OTP verification instead of email-based sign-in links.
+
+2. **Improved Forgot Password Flow**  
+   The email address is now automatically carried forward during the password reset process, eliminating the need for users to re-enter it after clicking “Forgot Password.”
+
+  
+# Bugs Fixed
+
+- Fixed an issue where signed-in users navigating to the Jobs page from the landing page were shown their personal jobs instead of marketplace jobs. The Jobs page now correctly displays marketplace listings.
+
+- Updated the interview agent flow so the interview now begins with a warm greeting directly, instead of asking the candidate for permission to begin.
+
+- Fixed an issue where the interview agent repeated the first interview question at the beginning of the session.
+
+- Fixed an issue where the interview agent asked multiple questions in a single turn and generated overly long prompts, causing candidates to lose context. Responses are now shorter, limited in length, and restricted to one question per turn.
+
+- Reduced microphone sensitivity so Serin responds primarily to human speech instead of background noise. This fix has been applied to both Serin and Serin Education.
+
+- Fixed a mobile issue where refreshing the page during an interview required pressing the refresh button twice to exit the session. The interview now exits correctly on the first refresh attempt. This fix has been applied to both Serin and Serin Education.
+
+- Fixed an issue where the Serin logo icons in the navigation bar were not rendering correctly for signed-up users on the waitlist. This fix has been applied to both Serin and Serin Education.
+
+- Fixed an issue in the updated profile section where resumes were not visible on the first click and only appeared after a second interaction.
+
+- Fixed unnecessary background re-rendering in the interview setup room caused by microphone input changes. The background is now independent of microphone state updates.
+
+- Fixed an issue where organization representatives associated with multiple organizations experienced organization switching after changing browser tabs. The selected organization in the navigation bar now persists correctly.
+
+- Fixed an issue where revoking one member’s organization invite changed the state of all revoke buttons in the list. Button state updates are now isolated to the selected member only.
+
+- Fixed an issue where the text “temporary” incorrectly appeared after saving a job with the “Intern-Part Time” employment type selected.
+
+- Fixed an issue where the Total Candidates KPI on the job dashboard did not update based on the selected organization. KPI values are now filtered correctly according to the active organization.
+
+- Fixed an issue where resume thresholding values configured during job creation were not persisting after saving.
+
+- Fixed inaccurate timestamps in conversation transcripts. Transcript timestamps now update correctly based on elapsed conversation time.
+
+</Update>
+
+
 <Update label="11th March, 2026" description="The Tempering Update" tags={["Serin v1.4.1"]}>
 <Frame>
     ![Serin v1.4 Update Image](/images/changelog/Serin_v1.4_Update_Image_v0.2.png)
