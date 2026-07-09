@@ -106,8 +106,8 @@
 },
 "footer": {
   "socials": {
-    "x": "https://x.com",
-    "instagram": "https://instagram.com"
+    "x": "https://x.com/Serin_ai_",
+    "instagram": "https://www.instagram.com/serin_ai_/"
   },
   "links": [
     {
@@ -119,7 +119,7 @@
     },
     {
       "label": "Features",
-      "href": "https://serin-ai.com/#features"
+      "href": "https://www.serin-ai.com/#features"
     }
       ]
     },
@@ -132,7 +132,7 @@
     },
     {
       "label": "Contact Us",
-      "href": "https://serin-ai.com/#contact"
+      "href": "https://www.serin-ai.com/#contact"
     }
       ]
     }        
