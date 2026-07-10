@@ -28,6 +28,25 @@
               "using-serin/invite-candidate",
               "using-serin/view-analysis"
             ]
+          },
+          {
+            "group": "Candidates",
+            "pages": [
+              "candidates/before-your-interview",
+              "candidates/technical-requirements",
+              "candidates/fair-interview-policy",
+              "candidates/resume-updates",
+              "candidates/faq"
+            ]
+          },
+          {
+            "group": "Organization",
+            "pages": [
+              "organization/team-management",
+              "organization/understanding-analysis",
+              "organization/credits-and-usage",
+              "organization/faq"
+            ]
           }
         ]
       },
