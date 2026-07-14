@@ -126,35 +126,62 @@
 "footer": {
   "socials": {
     "x": "https://x.com/Serin_ai_",
-    "instagram": "https://www.instagram.com/serin_ai_/"
+    "instagram": "https://www.instagram.com/serin_ai_/",
+    "youtube": "https://www.youtube.com/@serin_ai"
   },
   "links": [
+    {
+      "header": "Product",
+      "items": [
+        {
+          "label": "Serin Home",
+          "href": "https://www.serin-ai.com/"
+        },
+        {
+          "label": "Features",
+          "href": "https://www.serin-ai.com/#features"
+        }
+      ]
+    },
+    {
+      "header": "Company",
+      "items": [
+        {
+          "label": "About",
+          "href": "https://www.serin-ai.com/about"
+        },
+        {
+          "label": "Contact",
+          "href": "https://www.serin-ai.com/#contact"
+        }
+      ]
+    },
     {
       "header": "Resources",
       "items": [
         {
-      "label": "Serin Home",
-      "href": "https://serin-ai.com/"
-    },
-    {
-      "label": "Features",
-      "href": "https://www.serin-ai.com/#features"
-    }
+          "label": "Privacy & AI Policy",
+          "href": "https://www.serin-ai.com/privacy-ai-policy"
+        },
+        {
+          "label": "Biometric Data Notice",
+          "href": "https://www.serin-ai.com/biometric-data-notice"
+        },
+        {
+          "label": "Candidate Terms of Service",
+          "href": "https://www.serin-ai.com/candidate-terms"
+        }
       ]
     },
     {
       "header": "Connect",
       "items": [
         {
-      "label": "Email",
-      "href": "mailto:connect@serin-ai.com"
-    },
-    {
-      "label": "Contact Us",
-      "href": "https://www.serin-ai.com/#contact"
-    }
+          "label": "Email",
+          "href": "mailto:connect@serin-ai.com"
+        }
       ]
-    }        
+    }
   ]
 }
 }
