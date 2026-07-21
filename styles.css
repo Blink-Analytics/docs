@@ -250,3 +250,52 @@
   font-family: 'Playfair Display', serif !important;
   font-weight: 400 !important;
 }
+
+/* Mobile footer: 2x2 link grid (Product|Company / Resources|Connect) */
+@media (max-width: 767px) {
+  /* Only the link-columns row (first section), not Powered-by / theme bar */
+  #footer > div > div:first-child > div:last-child {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1.5rem 1rem !important;
+    width: 100%;
+  }
+
+  #footer > div > div:first-child > div:last-child > div {
+    width: 100%;
+    align-items: flex-start !important;
+  }
+
+  #footer > div > div:first-child > div:last-child a {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  /* Keep Powered by + theme toggles on one clean row */
+  #footer > div > div.flex.items-center.justify-between {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  #footer > div > div.flex.items-center.justify-between > div:first-child,
+  #footer > div > div.flex.items-center.justify-between > div:first-child a {
+    display: inline-flex !important;
+    flex-wrap: nowrap !important;
+    align-items: baseline !important;
+    white-space: nowrap;
+    min-width: 0;
+  }
+
+  #footer > div > div.flex.items-center.justify-between > div:last-child {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    width: auto !important;
+    flex-shrink: 0;
+  }
+}

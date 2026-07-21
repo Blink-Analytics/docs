@@ -3,7 +3,69 @@ title: "Product Updates"
 description: "Get started with Serin by choosing your role and setting up your account."
 icon: "star"
 ---
-<Update label="20th May, 2026" description="The Tempering Update" tags={["Serin v1.4.3"]}>
+<Update label="25th June, 2026" description="The Scale Update" tags={["Serin v1.5.x"]}>
+<Frame>
+    ![Serin v1.5 Update Image](/images/changelog/Serin_v1.5_Update_Image.png)
+  </Frame>
+
+# New Features
+
+1. **Three-Phase Interview Playback**  
+   Added a complete three-phase interview recording and playback system with a unified master timeline, phase navigation tabs (Pre-interview · Screen Share · Live Interview), flicker-free transcript seeking, and a standalone fullscreen player for reviewers. Learn more at [View Analysis →](/using-serin/view-analysis)
+
+2. **Custom Interview Questions**  
+   Organizations can now define job-specific custom interview questions with validation, optional AI reframe, and caps tied to interview length (3/6/9 questions for 20/40/60 min). Each question is scored and included in the detailed report and PDF. Learn more at [Jobs →](/using-serin/jobs)
+
+3. **Bulk Candidate Operations**  
+   Comprehensive bulk processing including ZIP import with preview, batch candidate creation, bulk resume screening, optional auto-screen on import, and auto-invite for eligible candidates when screening completes. Learn more at [Invite Candidates →](/using-serin/invite-candidate)
+
+4. **Application Labels**  
+   Replaced label dropdowns with a Notion-style combobox label picker, unified single and bulk status change flows, and human-readable label slugs. Learn more at [View Analysis →](/using-serin/view-analysis)
+
+5. **Per-Member Organization Invites**  
+   Organization representatives can now assign admin, manager, or member roles per invitee instead of a single shared role for all invites. Email tracking and organization logo display on invite screens are also included. Learn more at [Roles →](/getting-started/roles)
+
+6. **Job Scheduling & Deadlines**  
+   Jobs now support deadline dates, a publishable jobs limit (max 10 published), and a **Closed** status filter on My Jobs alongside Active and Draft. Learn more at [Jobs →](/using-serin/jobs)
+
+7. **Candidate Resume Re-upload**  
+   Candidates can change their resume after applying but before starting the interview, with a maximum of 3 updates per application and automatic re-scoring against job requirements. Learn more at [Quickstart →](/getting-started/quickstart)
+
+8. **Candidate Deadlines**  
+   Organizations can now set individual application deadlines for candidates in addition to the overall job deadline. Learn more at [Invite Candidates →](/using-serin/invite-candidate)
+
+# Feature Updates
+
+1. **Interview Room Full-Screen Mode**  
+   Full-screen updates for the interview room view, with automatic fullscreen entry after setup completion. Learn more at [View Analysis →](/using-serin/view-analysis)
+
+2. **Detailed Report & Candidate Comparison**  
+   Improved detailed report implementation with a one-click candidate comparison feature for side-by-side evaluation. Learn more at [View Analysis →](/using-serin/view-analysis)
+
+3. **Search Performance & Filter Persistence**  
+   Faster search with fuzzy matching and filter persistence via URL deep-links and localStorage across My Jobs, Marketplace, Applications, and Analysis pages. Learn more at [View Analysis →](/using-serin/view-analysis)
+
+4. **Email Validation & Auth Rules**  
+   Hardened authentication with 6-digit OTP, disposable email blocking, restrictions on free email domains for organizations, and Google sign-in restrictions for organization accounts and invites. Learn more at [Roles →](/getting-started/roles)
+
+# Bugs Fixed
+
+- **Organization switching & stale state** — Fixed org dropdown behavior with page-aware routing, and cleared cached data on sign-out to prevent previous-account data from appearing after login switches.
+
+- **Interview playback sync** — Resolved phase pause/play loops, corrected PiP sync offsets during feed swap, reduced transcript seek flicker, and fixed vision integrity marker timestamps on the playback timeline.
+
+- **Resume, avatar & logo navigation** — Fixed logo infinite loading on Windows, resume deselect behavior, and avatar upload crashes on invalid files.
+
+- **N+1 query on Analysis page** — Removed duplicate interview session queries that were firing multiple times per job, improving Analysis page load performance.
+
+- **Video analysis sync revert** — Reverted problematic sync changes that introduced playback regressions, restoring stable multi-phase recording alignment.
+
+- **Email bounce monitoring** — Organizations are now notified when emails sent to candidates or organization members fail to deliver or bounce.
+
+</Update>
+
+
+<Update label="20th May, 2026" description="The Integrity Update" tags={["Serin v1.4.3"]}>
 <Frame>
     ![Serin v1.4 Update Image](/images/changelog/Serin_v1.4_Update_Image_v0.2.png)
   </Frame>
@@ -77,7 +139,7 @@ icon: "star"
 </Update>
 
 
-<Update label="1st April, 2026" description="The Tempering Update" tags={["Serin v1.4.2"]}>
+<Update label="1st April, 2026" description="The Access Update" tags={["Serin v1.4.2"]}>
 <Frame>
     ![Serin v1.4 Update Image](/images/changelog/Serin_v1.4_Update_Image_v0.2.png)
   </Frame>
@@ -134,7 +196,7 @@ icon: "star"
 </Update>
 
 
-<Update label="11th March, 2026" description="The Tempering Update" tags={["Serin v1.4.1"]}>
+<Update label="11th March, 2026" description="The Pipeline Update" tags={["Serin v1.4.1"]}>
 <Frame>
     ![Serin v1.4 Update Image](/images/changelog/Serin_v1.4_Update_Image_v0.2.png)
   </Frame>
