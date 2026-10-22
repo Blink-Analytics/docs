@@ -1,0 +1,386 @@
+---
+title: "Zoho Recruit"
+description: "Connect Zoho Recruit with OAuth, publish jobs, and set up workflow webhooks for real-time applications and assessment answers."
+icon: "webhook"
+---
+
+Connect Zoho Recruit to publish Serin jobs as Zoho Job Openings, import their applicants with resumes and pre-screening answers, and keep candidate statuses in sync.
+
+Setup has three parts:
+
+1. **Connect** your Zoho account by signing in (OAuth).
+2. **Publish** a job after choosing its domain.
+3. **Set up webhooks** in Zoho for real-time updates: one for applications and one for assessment reviews. Zoho doesn't let other apps create webhooks automatically, so this is a one-time manual step. Serin gives you everything you need to copy in.
+
+# Connect Zoho Recruit
+
+1. Open your organization's **Integrations** tab.
+2. On the **Zoho Recruit** card, click **Connect Zoho Recruit**.
+3. Sign in to Zoho and review the permissions Serin asks for. Then click **Accept**.
+4. Zoho sends you back to the **Integrations** tab with a "Zoho Recruit connected" message.
+
+Sign in as a Zoho Recruit user who can manage Job Openings, Candidates, Applications, Clients, Departments, and Assessments. Serin acts in Zoho with this user's permissions.
+
+Once connected, the card shows:
+
+* **Data center**: the Zoho region your account is in. Serin detects this automatically. Supported regions are US (`com`), India (`in`), EU (`eu`), Australia (`com.au`), Japan (`jp`), and Saudi Arabia (`sa`).
+* The Zoho account email you connected with.
+* **Inbound webhooks**: when Serin last received a webhook from Zoho, or "none received yet".
+* The **Zoho webhook** settings you'll need in the webhook setup below.
+
+### Permissions Serin requests
+
+Serin asks only for the access it uses:
+
+* **Job Openings** — read, create, update
+* **Candidates** and **Applications** — read, create, update
+* **Clients** and **Departments** — read, create
+* **Assessments** — full access, to create the job's screening questionnaire and read candidates' answers
+
+### Disconnect
+
+Click **Disconnect** and confirm. Publishing and application import stop until you reconnect. Applications already imported stay in Serin, and your jobs keep their link to Zoho.
+
+If Zoho access expires or is revoked, the card shows **Not connected**. Click **Connect Zoho Recruit** to sign in again. Your webhook secret is kept when you reconnect, so the webhooks you set up in Zoho keep working.
+
+# Publish a Job
+
+Each job page has a **Zoho Recruit** section once your organization is connected.
+
+### 1. Choose a job domain
+
+Zoho requires an **Industry** on every Job Opening, so each job needs a domain before you can publish it.
+
+1. In the **Zoho job domain** box, select up to **3** domains.
+2. Click **Save domain**.
+
+The **first** domain you select is published as the Job Opening's Industry. The domain is saved on the Serin job itself, so it stays the same everywhere the job's domain is shown.
+
+### 2. Check the requirements
+
+Zoho needs all of these before a job can be published:
+
+* Job title
+* Job description
+* **Application deadline**, which becomes the Zoho target date
+* **Job domain**
+* Your organization's name
+
+Anything missing is listed under **Fix before publishing**, and the **Publish** button stays disabled until it's fixed. A missing location type shows as a warning but doesn't block publishing.
+
+### 3. Publish
+
+Click **Publish to Zoho**. The badge changes to **Live on Zoho Recruit**, and a **View in Zoho Recruit** link opens the opening.
+
+Zoho requires a **Client** and a **Department** on every Job Opening. Serin handles this for you: it reuses what your Zoho account already has, and creates them only the first time if none exist (for example "*Your Org*'s Recruitment"). The panel shows which department and client the job uses.
+
+### 4. Attach the screening questions (one time per job)
+
+If the job has pre-screening questions, Serin creates them in Zoho as a **Pre-Screening Assessment**. Zoho doesn't let apps attach an assessment to a job, so you need to do that once yourself:
+
+1. After publishing, a message names the assessment Serin created.
+2. In Zoho Recruit, open the Job Opening.
+3. Under **Pre-Screening Assessment**, add the assessment with that name.
+
+You only need to do this once per job. When you change the questions in Serin and click **Update on Zoho**, Serin updates the same assessment in Zoho.
+
+<Note>
+  If you see "Reconnect Zoho Recruit to sync screening questions", your connection was made without the Assessments permission. Disconnect and connect again to grant it.
+</Note>
+
+### Update, close, and reopen
+
+| Button | What it does |
+| - | - |
+| **Update on Zoho** | Sends your latest job edits and screening questions to Zoho. |
+| **Close on Zoho** | Sets the Zoho Job Opening to **Inactive** so it stops taking applications. Applications already imported are kept. |
+| **Reopen on Zoho** | Sets the Job Opening back to **In-progress**. |
+| **Mark closed on Zoho** | Shown when the job is closed in Serin. Closes the Zoho opening to match. |
+
+# Set Up Webhooks in Zoho
+
+Webhooks let Zoho tell Serin the moment something changes. Zoho sets them up per organization, not per job. You do this once and it covers every job you publish.
+
+You'll create two kinds of webhook in Zoho:
+
+| Webhook | Zoho module | Fires when | Serin uses it to |
+| - | - | - | - |
+| **Applications** | Applications | An application is created, edited, or deleted | Import new applicants, follow status changes, and remove deleted or archived applications |
+| **Reviews** | Reviews | A candidate submits a pre-screening assessment | Save the candidate's screening answers |
+
+Submitting an assessment doesn't change the application in Zoho, so the Applications webhook never fires for it. That's why answers need their own Reviews webhook.
+
+<Note>
+  Webhooks are optional. Without them, use **Import applications** on each job page (see [Import Applications →](#import-applications-manual-poll)). They make imports instant, and they're the only way Zoho status changes and deletions reach Serin.
+</Note>
+
+## Step 1: Copy your URL and secret from Serin
+
+On the **Zoho Recruit** card in **Integrations**, find the **Zoho webhook** box.
+
+**URL to Notify** — click the copy icon. It looks like this:
+
+```
+https://serin-ai.com/api/integrations/zoho-recruit/webhooks/applications?org=<your-organization-id>
+```
+
+Use this **same URL** for every webhook below, and paste it in full. The `?org=` part tells Serin which organization the delivery is for.
+
+**Webhook secret** — Serin creates one when you first connect.
+
+1. Click **Reveal secret**.
+2. Copy the secret with the copy button.
+3. Paste it somewhere safe until you've finished setting up Zoho.
+
+<Warning>
+  The secret is shown **only once**. The dialog doesn't close until you've copied it. If you lose it, click **Regenerate secret**: the old secret stops working **immediately**, so update every Zoho webhook with the new one. You can regenerate at most once every 8 hours.
+</Warning>
+
+## Step 2: Create the Applications webhook
+
+In Zoho Recruit, go to **Setup → Automation → Actions → Webhooks** and create a new webhook:
+
+| Setting | Value |
+| - | - |
+| **Name** | `Serin – Applications` |
+| **Method** | `POST` |
+| **URL to Notify** | The URL you copied from Serin |
+| **Authorization type** | General |
+| **Module** | Applications |
+
+Add the secret and the application's ID as parameters:
+
+| Parameter name | Type | Value | Required |
+| - | - | - | - |
+| `x-zoho-webhook-secret` | Header, custom value | Your webhook secret | Yes (header **or** parameter) |
+| `webhook_secret` | Custom parameter | Your webhook secret | Only if your Zoho plan can't send headers |
+| `application_id` | Entity parameter | Applications → **Application Id** | Yes |
+
+If Zoho won't let you map the Application Id, use these two parameters **instead of** `application_id`. Serin then finds the application from the candidate and the job:
+
+| Parameter name | Type | Value |
+| - | - | - |
+| `candidate_id` | Entity parameter | Applications → **Candidate Id** |
+| `job_opening_id` | Entity parameter | Applications → **Job Opening Id** |
+
+Send the secret **one** way: as the `x-zoho-webhook-secret` header if you can, or as the `webhook_secret` parameter if your plan can't send custom headers.
+
+<Warning>
+  Use the parameter names exactly as written. Serin rejects a delivery without `application_id`, or without both `candidate_id` and `job_opening_id`.
+</Warning>
+
+## Step 3: Create the Applications delete webhook
+
+Zoho doesn't tell webhooks why they fired, so deletions need their own webhook that labels them:
+
+1. Create a second webhook exactly like **Serin – Applications**, and name it `Serin – Applications (Delete)`.
+2. Add one more **custom parameter**: `action` with the value `delete`.
+
+| Parameter name | Type | Value |
+| - | - | - |
+| `action` | Custom parameter | `delete` |
+
+Serin always checks with Zoho before removing anything. If the application still exists in Zoho, the delivery is treated as a normal update and nothing is removed.
+
+## Step 4: Create the Applications workflow rules
+
+A webhook only runs when a workflow rule triggers it. Go to **Setup → Automation → Workflow Rules** and create two rules on the **Applications** module:
+
+**Rule 1 — created or edited**
+
+| Setting | Value |
+| - | - |
+| **Module** | Applications |
+| **Rule name** | `Serin – Application created or edited` |
+| **Execute on** | Create **or** Edit |
+| **Condition** | All applications |
+| **Instant action** | Webhook → `Serin – Applications` |
+
+**Rule 2 — deleted**
+
+| Setting | Value |
+| - | - |
+| **Module** | Applications |
+| **Rule name** | `Serin – Application deleted` |
+| **Execute on** | Delete |
+| **Condition** | All applications |
+| **Instant action** | Webhook → `Serin – Applications (Delete)` |
+
+With both rules on:
+
+* **Created** — a new application is imported into the Serin job.
+* **Edited** — a status change in Zoho updates the candidate's status in Serin (see [Status mapping](#status-mapping)).
+* **Archived** — moving an application to **Archived** in Zoho is an edit. Rule 1 catches it and Serin removes the application.
+* **Deleted** — Serin removes the application.
+
+Interview sessions and reports are always kept when an application is removed from Serin.
+
+## Step 5: Create the Reviews webhook and rule
+
+This webhook brings in candidates' answers to the job's pre-screening assessment.
+
+**Webhook.** Go to **Setup → Automation → Actions → Webhooks** and create:
+
+| Setting | Value |
+| - | - |
+| **Name** | `Serin – Reviews` |
+| **Method** | `POST` |
+| **URL to Notify** | The **same** URL from Serin |
+| **Authorization type** | General |
+| **Module** | Reviews |
+
+| Parameter name | Type | Value | Required |
+| - | - | - | - |
+| `x-zoho-webhook-secret` (or `webhook_secret`) | Header / custom parameter | Your webhook secret | Yes |
+| `review_id` | Entity parameter | Reviews → **Review Id** | Yes |
+| `assessment_id` | Entity parameter | Reviews → **Assessment Id** | Recommended |
+| `candidate_id` | Entity parameter | Reviews → **Candidate Id** | Recommended |
+| `job_opening_id` | Entity parameter | Reviews → **Job Opening Id** | Recommended |
+
+`review_id` is how Serin tells a Reviews delivery from an Applications delivery. The recommended IDs let Serin quickly ignore reviews for jobs that aren't connected to Serin.
+
+**Workflow rule.** Go to **Setup → Automation → Workflow Rules** and create:
+
+| Setting | Value |
+| - | - |
+| **Module** | Reviews |
+| **Rule name** | `Serin – Assessment submitted` |
+| **Execute on** | Create **or** Edit |
+| **Condition** | All reviews |
+| **Instant action** | Webhook → `Serin – Reviews` |
+
+When a candidate submits the assessment, Serin saves their answers to the application. If the application isn't in Serin yet, Serin imports it first.
+
+## Step 6: Check it works
+
+1. Apply to one of your published jobs from its Zoho careers page, or add an application in Zoho.
+2. On the **Integrations** tab, **Inbound webhooks** should change from "none received yet" to "last received *(time)*".
+3. The applicant appears in the job's applications in Serin, with a **Zoho** badge.
+
+If nothing arrives, open Zoho's webhook failure log. Serin answers with a clear error instead of failing silently:
+
+| Response | Meaning | Fix |
+| - | - | - |
+| `400` "Missing ?org= query parameter" | The URL was pasted without its `?org=` part | Paste the full **URL to Notify** again |
+| `400` "Webhook must include application_id, or both candidate_id and job_opening_id" | The ID parameters are missing or misnamed | Check the parameter names in Step 2 |
+| `401` "Invalid webhook secret" | The secret is wrong or out of date | Paste the current secret, or regenerate it and update every webhook |
+| `401` "No webhook secret is configured…" | No secret has been created yet | Click **Generate secret** in Serin |
+| `401` "Zoho Recruit is not connected" | The connection was removed or expired | Reconnect Zoho Recruit |
+| `502` | Serin couldn't reach Zoho to fetch the record | Usually temporary. Use **Import applications** on the job to catch up |
+
+# Import Applications (Manual Poll)
+
+Each job's **Zoho Recruit** section has an **Import applications** button. It fetches the job's applications from Zoho on demand, and works only while the job is **Live on Zoho Recruit**.
+
+Use it to:
+
+* Import applicants if you haven't set up webhooks yet.
+* Catch anything a webhook missed, for example while a workflow rule was off.
+
+Each import:
+
+1. **Reads every application** on the Zoho Job Opening.
+2. **Imports the ones that aren't in Serin yet**, skipping any that are **Archived** in Zoho.
+3. **Fills in missing screening answers** for applicants who submitted the assessment, even without the Reviews webhook.
+4. **Updates the panel**: the **Last import** time, and how many applicants are still waiting.
+
+When it finishes, a message shows how many applications were imported, and how many were skipped because they're missing a resume or email.
+
+<Note>
+  **Import applications** only brings in new applicants and their answers. Status changes and deletions made in Zoho reach Serin only through the Applications webhook. If you rely on those, set up the webhooks.
+</Note>
+
+### "N new Zoho Recruit applications since the last import"
+
+This means some applicants were skipped on the last import because Zoho had no resume or email for them yet. They aren't lost. Serin tries again on the next import or webhook delivery, so make sure those candidates have a resume attached in Zoho.
+
+# How Applications Sync
+
+### From Zoho to Serin
+
+For each new Zoho application, Serin:
+
+* Creates the candidate, or matches an existing Serin user by email.
+* Saves their resume and runs AI resume screening against the job.
+* Saves their pre-screening answers, once they've submitted the assessment.
+* Sends brand-new candidates an email invite to Serin, unless Zoho already has a final decision for them.
+
+Serin always fetches the latest record from Zoho before saving anything. Field values in the webhook are only used to find the record.
+
+### From Serin to Zoho
+
+Applications that start in Serin are created in Zoho too. That includes candidates who apply on Serin and candidates you add or invite. Serin creates the Zoho candidate with their name, email, phone, and resume, then adds them to the Job Opening. Withdrawn applications are never sent.
+
+### Status mapping
+
+When you change a candidate's status in Serin, Serin sets the matching Zoho **Application Status**:
+
+| Serin status | Zoho Application Status |
+| - | - |
+| Applied / Invited | New |
+| Interview scheduled | Interview-Scheduled |
+| Interview completed / Under review | Waiting-for-Evaluation |
+| Accepted | Hired |
+| Rejected | Rejected |
+| Withdrawn | *Not synced* |
+
+When the Applications webhook reports a change in Zoho, Serin reads the application's pipeline stage:
+
+| Zoho | Serin status |
+| - | - |
+| Rejected, Unqualified, or Junk statuses | Rejected |
+| Declined or Withdrawn statuses (e.g. Offer-Declined) | Withdrawn |
+| Submission stage | Under review |
+| Offered or Hired stage | Accepted |
+| **Archived** | Application removed from Serin |
+| Screening or Interview stage | *No change*. Serin runs its own screening and interview flow. |
+
+Two rules keep the systems from fighting each other:
+
+* **Decisions always apply.** Rejecting, hiring, or withdrawing in Zoho always updates Serin, even if the candidate already had a different decision.
+* **Other moves only go forward.** A Zoho stage never moves a Serin application back to an earlier step.
+
+<Note>
+  Status names can be customized in Zoho, so Serin matches on the pipeline stage rather than the exact name. If you renamed or removed **Archived**, contact Serin support so we can map your status.
+</Note>
+
+### Deleting applications
+
+* **Deleted in Serin** — Zoho doesn't allow apps to delete applications, so Serin moves the Zoho application to **Archived**. The Zoho candidate isn't touched. If Zoho rejects the change (for example, your account has no **Archived** status), the delete in Serin is cancelled so the two systems stay in step.
+* **Archived or deleted in Zoho** — with the Applications webhook rules on, the application is removed from Serin. Interview sessions and reports are kept.
+
+# FAQ
+
+<AccordionGroup>
+  <Accordion title="Do I need to set up webhooks for every job?">
+    No. Zoho webhooks and workflow rules apply to your whole Zoho account. Set them up once and they cover every job you publish from Serin, including future ones.
+  </Accordion>
+
+  <Accordion title="Can I skip the webhooks?">
+    Yes. Use **Import applications** on each job page to bring in new applicants and their screening answers. Without the Applications webhook, though, status changes and deletions in Zoho won't reach Serin.
+  </Accordion>
+
+  <Accordion title="Why is the Publish button disabled?">
+    The panel lists the reason under **Fix before publishing**. The usual causes are a missing **job domain** or a missing **application deadline**, and Zoho requires both. Pick a domain in the **Zoho job domain** box and click **Save domain**, and set a deadline on the job.
+  </Accordion>
+
+  <Accordion title="Candidates' screening answers aren't showing in Serin.">
+    Check three things. Is the assessment attached to the Job Opening in Zoho (Publish a Job, step 4)? Is the **Reviews** webhook and workflow rule set up (Step 5)? If both are in place, click **Import applications** once to fill in any missing answers.
+  </Accordion>
+
+  <Accordion title="I lost the webhook secret.">
+    Click **Regenerate secret** on the Integrations tab, copy the new secret, and update **every** Serin webhook in Zoho. The old secret stops working right away, and you can regenerate only once every 8 hours.
+  </Accordion>
+
+  <Accordion title="Does reconnecting Zoho change my webhook secret?">
+    No. Reconnecting keeps your existing secret, so your Zoho webhooks keep working. Serin lets you reveal it once more after reconnecting.
+  </Accordion>
+
+  <Accordion title="Why did Serin create a Client and Department in Zoho?">
+    Zoho requires both on every Job Opening. Serin reuses what you already have, and only creates them the first time if none exist. Every later job reuses the same ones.
+  </Accordion>
+
+  <Accordion title="Can I connect Zoho Recruit and 100Hires at the same time?">
+    No. An organization can be connected to one ATS at a time. Disconnect the current one before connecting the other.
+  </Accordion>
+</AccordionGroup>

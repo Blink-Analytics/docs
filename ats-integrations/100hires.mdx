@@ -1,0 +1,190 @@
+---
+title: "100Hires"
+description: "Connect 100Hires with an API key, publish jobs, and sync applications in real time."
+icon: "key-round"
+---
+
+Connect 100Hires to publish Serin jobs to your 100Hires account, import the applications they receive, and keep candidate statuses in sync. Setup takes a minute: paste your API key, publish a job, and turn on its webhook.
+
+# Connect 100Hires
+
+### Get your API key
+
+1. Sign in to 100Hires.
+2. Open [app.100hires.com/settings/integrations](https://app.100hires.com/settings/integrations).
+3. Copy your API key.
+
+### Connect in Serin
+
+1. Open your organization's **Integrations** tab.
+2. On the **100Hires** card, click **Connect 100Hires**.
+3. Paste your API key. Use the eye icon to check what you pasted.
+4. Click **Test & Connect**.
+
+Serin checks the key with 100Hires before saving it. When it succeeds, the card shows **Connected**.
+
+<Warning>
+  If you see "Invalid API key or your 100Hires account isn't verified yet", check that you copied the whole key and that your 100Hires account has been verified.
+</Warning>
+
+### Update or remove the key
+
+* **Update API Key** — replace the stored key, for example after you rotate it in 100Hires. The old key is overwritten. If a previous key expired or was revoked, the dialog tells you so.
+* **Disconnect** — stops publishing, application import, and status sync. Your jobs keep their link to 100Hires, so everything picks up again when you reconnect.
+
+# Publish a Job
+
+Each job page has a **100Hires** section once your organization is connected.
+
+1. Open the job in Serin.
+2. In the **100Hires** section, check the **Posting location**.
+3. Click **Publish to 100Hires**.
+
+The badge changes to **Live on 100Hires**, and a **View in 100Hires** link opens the posting.
+
+### What Serin sends
+
+* **Title** and **description**, built from the Serin job's summary, responsibilities, skills, and qualifications.
+* **Location**, plus whether the role is remote or hybrid.
+* **Salary range**, when the job has one.
+* **Application deadline**, when set.
+* **Application form**: first name, last name, email, phone, and resume are always required. Your job's pre-screening questions are added to the form as required questions. When you edit the questions in Serin and update the job, the form is updated to match.
+
+### Posting location
+
+100Hires requires a country on every job. Serin picks the location in this order:
+
+1. The job's own location.
+2. Your organization's address, written as `City, Country`.
+3. The location used the last time this job was published.
+
+If none of these exist, the **Publish** button stays disabled and the panel asks you to add a location.
+
+<Tip>
+  An application deadline isn't required, but we recommend setting one.
+</Tip>
+
+### Update, close, and reopen
+
+| Button | What it does |
+| - | - |
+| **Update on 100Hires** | Sends your latest job edits and screening questions to 100Hires. |
+| **Close on 100Hires** | Closes the posting on 100Hires so it stops taking applications. |
+| **Mark closed on 100Hires** | Shown when the job is closed in Serin. Closes the 100Hires posting to match. |
+
+To reopen a posting, make sure the job is open in Serin and click **Update on 100Hires**. The 100Hires status always follows the Serin job's status when you update.
+
+# Real-time Updates (Webhook)
+
+The webhook lets 100Hires send new applications and status changes to Serin as they happen. It's set **per job** and needs just one click. There's nothing to configure in 100Hires.
+
+### Enable
+
+1. Publish the job first. The button only works while the job is **Live on 100Hires**.
+2. In the **Real-time application events** box, click **Enable webhook**.
+
+Serin registers the webhook with 100Hires for you. A dialog then shows the webhook's signing secret once. Serin already stores it and uses it to verify every delivery, so you don't need to paste it anywhere. Keep a copy only if your team wants it for reference.
+
+Once enabled, 100Hires pushes:
+
+* **New applications** — imported into the Serin job right away.
+* **Status changes** — hired and rejected decisions update the candidate in Serin.
+* **Deletions** — the application is removed from Serin. Interview sessions and reports are kept.
+
+### Disable
+
+Click **Disable webhook** and confirm. 100Hires stops pushing events for that job. You can still use **Check for applications**, and you can enable the webhook again later.
+
+# Check for Applications (Manual Import)
+
+**Check for applications** fetches the job's applications from 100Hires on demand. Use it when the webhook is off, or to catch anything that was missed. It works only while the job is **Live on 100Hires**.
+
+Each check:
+
+1. **Imports new applications** that aren't in Serin yet.
+2. **Updates applications you already have**: if a candidate was hired or rejected in 100Hires, Serin applies the same decision.
+3. **Picks up where it left off.** Each check only reads applications changed since the last one, so you can run it as often as you like without creating duplicates.
+
+When it finishes, a message shows how many applications were imported and how many were skipped. If some still need importing, the panel shows **"N new 100Hires applications since last check."**
+
+<Note>
+  An application is skipped when Serin can't get a resume or an email address for the candidate. It isn't lost: Serin tries it again on the next check.
+</Note>
+
+# How Applications Sync
+
+### From 100Hires to Serin
+
+For each new 100Hires application, Serin:
+
+* Creates the candidate, or matches an existing Serin user by email.
+* Saves their resume and runs AI resume screening against the job.
+* Saves their answers to the job's pre-screening questions.
+* Sends brand-new candidates an email invite to Serin. Candidates who are already hired or rejected in 100Hires don't get one.
+
+Imported applications show a **100Hires** badge in the applications table.
+
+### From Serin to 100Hires
+
+Applications that start in Serin are created in 100Hires too. That includes candidates who apply on Serin and candidates you add or invite. Serin creates (or reuses) the 100Hires candidate with their details, resume, and screening answers, then adds the application to the published job. Withdrawn applications are never sent.
+
+When you publish a job that already has applicants in Serin, those applicants are sent to 100Hires as part of the publish.
+
+### Status mapping
+
+When you change a candidate's status in Serin, Serin moves the application to the matching 100Hires stage:
+
+| Serin status | 100Hires |
+| - | - |
+| Applied | **Applied** stage |
+| Invited | **Sourced** stage |
+| Interview scheduled | **Interview** stage |
+| Interview completed / Under review | **Evaluation** stage |
+| Accepted | **Offer** stage |
+| Rejected | Application rejected |
+
+In the other direction, only final decisions in 100Hires change the Serin status:
+
+| 100Hires | Serin status |
+| - | - |
+| Rejected or disqualified | Rejected |
+| Hired | Accepted |
+
+Other 100Hires stage moves are recorded on the application but don't change its Serin status. Your team stays in control of Serin's interview pipeline.
+
+<Note>
+  Stages are matched by name. If you renamed a stage in your 100Hires pipeline, for example "Interview" to "Phone Screen", Serin can't find it and the application stays where it is in 100Hires.
+</Note>
+
+### Deleting applications
+
+* **Deleted in Serin** — the linked application is also deleted in 100Hires. The 100Hires candidate is deleted too, but only if they have no other applications there.
+* **Deleted in 100Hires** — with the webhook on, the application is removed from Serin. Interview sessions and reports are kept.
+
+# FAQ
+
+<AccordionGroup>
+  <Accordion title="Do I have to enable the webhook?">
+    No. Without it, use **Check for applications** to import new applications and pick up hires and rejections. The webhook just makes this automatic and instant.
+  </Accordion>
+
+  <Accordion title="Do I enable the webhook once, or for every job?">
+    For every job. The webhook is registered on the 100Hires job, so enable it in each job's **100Hires** section after publishing it.
+  </Accordion>
+
+  <Accordion title="Why is the Publish button disabled?">
+    Usually because the job has no location. Add a city and country to the job, or set your organization address as `City, Country`. A missing title or description also blocks publishing; the panel lists anything that needs fixing under **Fix before publishing**.
+  </Accordion>
+
+  <Accordion title="Why were some applications skipped?">
+    Serin needs a resume and an email address to create the candidate. If 100Hires doesn't return them yet, the application is skipped and retried on the next check.
+  </Accordion>
+
+  <Accordion title="Will a candidate be imported twice?">
+    No. Each 100Hires application is linked to one Serin application, so repeated checks and repeated webhook deliveries never create duplicates.
+  </Accordion>
+
+  <Accordion title="What happens if I disconnect 100Hires?">
+    Publishing, imports, and status sync stop. Applications already imported stay in Serin, and your jobs keep their link to 100Hires for when you reconnect.
+  </Accordion>
+</AccordionGroup>
