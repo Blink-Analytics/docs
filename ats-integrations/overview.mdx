@@ -1,0 +1,50 @@
+---
+title: "ATS Integrations"
+description: "Connect Serin to your applicant tracking system to publish jobs and sync applications both ways."
+icon: "plug"
+---
+
+Serin connects to the applicant tracking system (ATS) your team already uses. Once connected, you can publish Serin jobs to your ATS, bring the applications it receives into Serin for AI screening and interviews, and keep each candidate's status in sync between the two.
+
+Serin currently supports two ATS platforms:
+
+| | 100Hires | Zoho Recruit |
+| - | - | - |
+| **How you connect** | Paste an API key | Sign in with Zoho (OAuth) |
+| **Real-time updates** | One click per job on the job page | Configured once in Zoho as workflow webhooks |
+| **Extra job setup** | A posting location (city and country) | A job domain and an application deadline |
+| **Manual import** | **Check for applications** button | **Import applications** button |
+
+[100Hires setup →](/ats-integrations/100hires) · [Zoho Recruit setup →](/ats-integrations/zoho-recruit)
+
+# Before You Start
+
+### Who can manage integrations
+
+Only organization **Admins** and **Managers** can connect, disconnect, or configure an ATS, and publish jobs to it. Members can see imported applications but cannot change integration settings. See [Roles →](/getting-started/roles/#organization-member-roles).
+
+### Where to find integrations
+
+1. Click your **Profile** in the navigation bar.
+2. Open the **Organization** tab and select your organization.
+3. Go to the **Integrations** tab.
+
+You can also click **Go to Integrations** from the **Third-party ATS Integrations** section of any job page when no ATS is connected yet.
+
+### One ATS per organization
+
+An organization can be connected to **one ATS at a time**. If 100Hires is connected, the Zoho Recruit **Connect** button is disabled (and vice versa) until you disconnect the current one.
+
+# What Syncs
+
+| Direction | What happens |
+| - | - |
+| **Serin → ATS: jobs** | Publish a Serin job to the ATS, update it after edits, close it, or reopen it. |
+| **ATS → Serin: applications** | Candidates who apply in the ATS are imported into the Serin job with their resume, screened by AI, and invited to Serin. |
+| **Serin → ATS: applications** | Candidates who apply on Serin, or whom you add or invite in Serin, are created in the ATS with their details and resume. |
+| **Both ways: status** | Moving a candidate forward, rejecting, or hiring in one system is reflected in the other. |
+| **Both ways: deletes** | Removing an application in one system removes or archives it in the other. Interview sessions and reports in Serin are always kept. |
+
+<Note>
+  Imported applications go through the same flow as **Add Candidate**: Serin screens the resume against the job and sends new candidates an email invite to Serin.
+</Note>

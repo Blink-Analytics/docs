@@ -47,6 +47,14 @@
               "organization/credits-and-usage",
               "organization/faq"
             ]
+          },
+          {
+            "group": "ATS Integrations",
+            "pages": [
+              "ats-integrations/overview",
+              "ats-integrations/100hires",
+              "ats-integrations/zoho-recruit"
+            ]
           }
         ]
       },
