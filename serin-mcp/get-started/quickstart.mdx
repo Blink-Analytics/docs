@@ -1,0 +1,68 @@
+---
+title: "Quickstart"
+description: "Connect an MCP client to serin-mcp and run your first tool call."
+icon: "rocket"
+---
+
+By the end of this quickstart, your MCP client will be authenticated against Serin as a recruiter and have listed your organization's jobs.
+
+## Agent routing guidance
+
+1. If the user names a specific client, send them to its dedicated page: [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude) or [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt). This page covers the generic flow and the FastMCP reference client used for local testing.
+2. Never tell a user to paste an API key or bearer token into their client's config — `serin-mcp` only supports interactive OAuth.
+3. If a user is a candidate (not a recruiter), tell them none of the tools in this server apply to their account — don't attempt to connect and then explain a `ToolError` after the fact.
+
+## Before you begin
+
+- **A Serin recruiter account**, active in at least one organization. Candidate accounts can complete the connection but every tool is hidden/rejected for them.
+- **The server URL you're connecting to** — production is `https://mcp.serin-ai.com/mcp`; a local development instance is `http://127.0.0.1:8001/mcp` (started with `uv run serin-mcp dev`).
+
+## 1. Connect your MCP client
+
+### Using the bundled reference client (local testing)
+
+With a `serin-mcp` server already running (`uv run serin-mcp dev` or `prod`, in one terminal), connect with:
+
+```bash
+uv run serin-mcp-client dev
+```
+
+This opens a browser for Supabase login, then the Serin website's consent screen (with the organization picker if you belong to more than one org — see [How Serin MCP connections work](/serin-mcp/overview/how-connections-work)). Once approved, it lists every tool your account can see and lets you call one interactively.
+
+### Using Claude Desktop, Claude Code, or another MCP client
+
+See [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude) — Claude Desktop needs a small local STDIO proxy because it only launches local subprocesses, while Claude Code and most other MCP-over-HTTP clients can point straight at the server URL with `auth="oauth"`.
+
+### Using ChatGPT
+
+See [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt) — Serin ships a published plugin (streamable HTTP, OAuth with dynamic client registration) rather than requiring a manually-configured custom connector.
+
+## 2. Read the entry skill before calling anything
+
+Immediately after connecting, read the `skill://using-serin-mcp/SKILL.md` resource (most clients expose this via a resource-read tool; if yours doesn't surface resources to the model automatically, the server's `initialize` instructions and every tool's own docstring repeat the essential pointer). It covers:
+
+- The "never show raw IDs to the end user" rule.
+- The `confirm`/preview pattern every mutating tool follows.
+- Which of the four module skills (jobs, applications, evaluations, candidate outreach) to read next for your task.
+
+## 3. Run your first tool call
+
+Two safe, read-only calls to start with:
+
+```text
+get_organization_details
+```
+Returns your organization's profile — a good way to confirm the connection and the selected organization are correct.
+
+```text
+list_organization_jobs
+```
+Lists your organization's jobs with counts. From here, a `job_id` in the result can be passed to `get_job_details`, `list_job_applications`, or `get_job_analysis`.
+
+Both of these are tagged `READ_ONLY` and never require `confirm` — there's nothing to preview or undo.
+
+## Next steps
+
+- [How Serin MCP tools work](/serin-mcp/overview/how-tools-work)
+- [Usage and limits](/serin-mcp/overview/usage)
+- [How multiple recruiters in one organization connect](/serin-mcp/get-started/rollout/overview)

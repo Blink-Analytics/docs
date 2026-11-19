@@ -1,0 +1,54 @@
+---
+title: "How servers work"
+description: "What the serin-mcp FastMCP instance contains, how dev/prod are split, and its current scaling limits."
+icon: "server"
+---
+
+There is one Serin MCP server codebase, deployed as two environment instances (development and production), each a single FastMCP app over Streamable HTTP.
+
+## Agent routing guidance
+
+- If the user is asking *why* a connection behaves a certain way (OAuth, org selection), send them to [How Serin MCP connections work](/serin-mcp/overview/how-connections-work) instead of this page.
+- If the user is asking *what a specific tool does*, send them to [How Serin MCP tools work](/serin-mcp/overview/how-tools-work).
+- This page is about the server process itself: what's registered inside it, how dev and prod differ, and what its scaling limits are. Use it when the user asks "is there one Serin MCP server or several," "what's the difference between dev and prod," or "can Serin MCP scale."
+
+Unlike Zapier's one-server-per-connection model, Serin MCP is **one server per environment**, shared by every recruiter who connects to it — isolation between organizations happens inside the server (via OAuth claims and database row-level scoping), not by provisioning a separate server per user or per org.
+
+## What a server contains
+
+The FastMCP instance lives in `app/server.py` and is built once at import time:
+
+- **Supabase OAuth provider** (`SupabaseProvider`) — the only authentication method; see [How Serin MCP connections work](/serin-mcp/overview/how-connections-work).
+- **27 registered tools** across jobs, organization profile, applications, evaluations, and candidate outreach — see [How Serin MCP tools work](/serin-mcp/overview/how-tools-work).
+- **Response-caching middleware**, backed by Upstash Redis, applied to `list_tools` (5 minutes) and to exactly one tool call (`search_locations`) — every other tool call is left uncached because its answer depends on data the server itself just wrote or might write next.
+- **Role-based tool-visibility middleware** — hides and rejects recruiter-only tools for non-recruiter callers (role is re-checked live per request, not cached).
+- **A skills resource provider**, serving `skill://using-serin-mcp/SKILL.md` and four module skills (`serin-jobs`, `serin-applications`, `serin-evaluations`, `serin-candidate-outreach`) as readable MCP resources. These are the server's own usage documentation, written for the connecting model.
+- **One unauthenticated custom route**, `GET /.well-known/openai-apps-challenge`, serving a static ownership token for the OpenAI plugin directory's domain-verification step. Every other route requires OAuth.
+- **Per-user session storage** (Redis, 1-day max TTL) is wired into the server (`session_state_store`) but no shipped tool currently uses it — every tool today is stateless, reading and writing Supabase fresh on each call.
+
+## Development and production are two full-stack environments
+
+Dev and prod aren't a log-level toggle — they point at **two separate Supabase projects**, each with its own data:
+
+| | Development | Production |
+|---|---|---|
+| Default port | 8001 | 8000 |
+| Env file | `.env.development` | `.env.production` |
+| Supabase project | dev project | prod project |
+
+Both can run side by side on one machine, each with its own `MCP_HOST`/`MCP_PORT` override if needed. Which one a given process uses is selected by `$APP_ENV` before any Supabase-touching code is imported — reversing that order breaks environment selection entirely.
+
+## Deployment and scaling
+
+The server is deployed as a Docker image to Google Cloud Run (multi-stage build via `uv`, non-root user, reads Cloud Run's injected `$PORT`). Two things to know if you depend on its availability:
+
+- **`--max-instances=1` today.** The server runs a *stateful* HTTP MCP transport, which relies on session affinity between a client and the instance it first connected to. Cloud Run's load balancing doesn't reliably preserve that affinity across multiple instances (most MCP clients don't forward the cookies that would make sticky sessions work), so the deployment is deliberately capped at one instance and relies on Cloud Run's per-instance concurrency (80 concurrent requests by default) to absorb load.
+- **Horizontal scaling is possible but not yet enabled.** Switching the transport to stateless HTTP mode would remove the session-affinity requirement and allow more than one instance — this is a known, documented follow-up, not something currently running.
+- The Redis-backed response cache and session store are **already** safe across multiple instances (they're keyed by authenticated user identity, not tied to a process) — the single-instance constraint above is specifically about the MCP transport's own handshake, not these.
+
+## Next steps
+
+- [How Serin MCP connections work](/serin-mcp/overview/how-connections-work)
+- [How Serin MCP tools work](/serin-mcp/overview/how-tools-work)
+- [Usage and limits](/serin-mcp/overview/usage)
+- [Quickstart](/serin-mcp/get-started/quickstart)

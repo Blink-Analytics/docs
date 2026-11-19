@@ -1,0 +1,55 @@
+---
+title: "How connections work"
+description: "Supabase OAuth is the only connection method for serin-mcp, including how org selection works for recruiters with multiple organizations."
+icon: "link-2"
+---
+
+Every connection to Serin MCP authenticates via Supabase's OAuth Server. There is no API-key or static-token alternative.
+
+## Agent routing guidance
+
+- "Why do I have to log in through a browser" / "why did it ask me to pick an organization" → this page.
+- "How do I actually add this to Claude/ChatGPT" → [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude) or [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt).
+- Never tell a user to pass an API key, bearer token, or client secret directly into an MCP client config for Serin — the only supported flow is interactive OAuth (`auth="oauth"` in FastMCP client terms), opened in a browser.
+
+## What a Serin MCP connection is
+
+A connection is an OAuth session between an MCP client and the `serin-mcp` server, brokered by Supabase. The client is redirected to Supabase for login, then to a consent screen hosted on the Serin website, and is handed back an access token scoped to the signed-in user (and, for recruiters, to one organization — see below).
+
+```text
+https://mcp.serin-ai.com/mcp        (production, Streamable HTTP)
+http://127.0.0.1:8001/mcp           (local development)
+http://127.0.0.1:8000/mcp           (local production-config testing)
+```
+
+Supabase's OAuth Server supports **Dynamic Client Registration (DCR)**, so MCP clients that register themselves on first connection (rather than being pre-registered as a named OAuth app) work out of the box — this is what both the generic FastMCP `auth="oauth"` flow and the published ChatGPT plugin rely on.
+
+## Supported transport
+
+`serin-mcp` serves **Streamable HTTP** at `/mcp`. It does not speak raw STDIO itself — a client that only supports STDIO (such as Claude Desktop) needs a local proxy process in between; see [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude).
+
+## Authentication: OAuth only, two account types
+
+| Account type | What the consent screen shows |
+|---|---|
+| Candidate | Client name, requested scopes, redirect target — a plain consent screen. |
+| Recruiter | The same, plus an organization picker if the account belongs to more than one active organization. |
+
+### Organization selection (recruiters)
+
+A recruiter who belongs to multiple organizations chooses, on the consent screen itself, which one the connection will act on. That choice is written into the newly issued access token's claims (`user_metadata.active_organization_id`) **before** the token is minted, so every tool call made over that connection reads it back and scopes itself to that organization.
+
+- **This choice is fixed for the life of the connection.** There is no per-call organization switch.
+- **To act on a different organization,** disconnect and reconnect — consent (and the organization picker) runs again.
+- A recruiter with only one active organization membership skips the picker; the server falls back to their first active membership automatically.
+
+### What a candidate account can do
+
+Candidate accounts can complete the OAuth flow, but none of the 27 tools documented in [How Serin MCP tools work](/serin-mcp/overview/how-tools-work) are visible to them — every one is tagged recruiter-only, enforced by server-side middleware that re-checks the caller's role on every request (not just at connection time).
+
+## Next steps
+
+- [How Serin MCP servers work](/serin-mcp/overview/how-servers-work)
+- [How Serin MCP tools work](/serin-mcp/overview/how-tools-work)
+- [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude)
+- [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt)

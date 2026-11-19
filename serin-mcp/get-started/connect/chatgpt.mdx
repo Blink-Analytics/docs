@@ -1,0 +1,45 @@
+---
+title: "Connect Serin MCP to ChatGPT"
+description: "Set up the published Serin AI plugin in ChatGPT — streamable HTTP with OAuth dynamic client registration."
+icon: "message-square"
+---
+
+Serin ships as a published plugin named **Serin AI** (publisher: Serin Labs), not a manually-configured custom connector — it's listed under the Business & Operations category.
+
+This page is about ChatGPT specifically. For Claude Desktop or Claude Code, see [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude).
+
+## Before you begin
+
+- A Serin recruiter account. The plugin's long-form listing description is explicit that it requires one, and that access is limited to whichever organization you select during sign-in and consent — the same per-connection org scoping described in [How Serin MCP connections work](/serin-mcp/overview/how-connections-work).
+- Nothing to purchase separately: the plugin is included with your existing Serin platform access. It doesn't process payments itself (`commerce: false` in its listing).
+
+## Connect Serin MCP to ChatGPT
+
+1. **Find the plugin.** Search for **Serin AI** in ChatGPT's plugin/connector directory, or open it from a link Serin provides.
+2. **Add it to your workspace.** The plugin registers `https://mcp.serin-ai.com/mcp` as a Streamable HTTP MCP server.
+3. **Authenticate.** The plugin uses OAuth with dynamic client registration (no manually-issued client ID/secret) — you'll be redirected through the same Supabase login and Serin website consent screen used by every other client, including the organization picker if your account belongs to more than one.
+4. **Start a chat.** Once connected, ChatGPT can call any of the 27 tools your recruiter role and selected organization expose — try one of the plugin's own suggested prompts:
+   - "Show my organization's open jobs in Serin."
+   - "Help me compare applicants for a Serin job."
+   - "Help me review my recruiting pipeline in Serin."
+
+## What the plugin will and won't do
+
+The plugin's own listing is explicit about scope, and it's worth knowing before you ask it something:
+
+- It can read and write recruiting data (jobs, applications, interviews, outreach) — its declared capabilities are Interactive, Read, and Write.
+- Interview assessments support human review; **hiring decisions remain with the recruiter** — the plugin won't claim to have made one.
+- It previews candidate invitations, emails, job deletions, and bulk application changes before anything is sent or changed, the same `confirm`/preview pattern described in [How Serin MCP tools work](/serin-mcp/overview/how-tools-work).
+- It has no payroll functionality, no access outside your selected organization, and no external data-scraping tools (e.g. it will not attempt to import candidates from LinkedIn or any other outside source).
+
+## Verify the result
+
+- Ask it to show your organization's profile and jobs. A working connection returns real data, not a connection error.
+- If the plugin doesn't appear as connected, or tool calls fail with an authentication error, remove and re-add it to force the OAuth flow to run again.
+- If you're signed in as a candidate account rather than a recruiter account, the plugin will connect but every recruiting tool will be unavailable to it.
+
+## Next steps
+
+- [How Serin MCP connections work](/serin-mcp/overview/how-connections-work)
+- [How Serin MCP tools work](/serin-mcp/overview/how-tools-work)
+- [Quickstart](/serin-mcp/get-started/quickstart)

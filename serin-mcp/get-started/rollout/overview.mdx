@@ -1,0 +1,31 @@
+---
+title: "How multiple recruiters in one organization use Serin MCP"
+description: "There is no admin-driven org-wide install step for serin-mcp — each recruiter connects and selects their organization individually."
+icon: "users"
+---
+
+Serin MCP has no centralized, admin-driven "roll out to the whole org" installation step. Every recruiter who wants to use it connects individually, and each connection is scoped to one organization chosen at consent time.
+
+## Agent routing guidance
+
+If a user (especially an org admin) asks "how do I roll this out to my whole team," the honest answer is: there is nothing to roll out centrally. Point them at this page rather than inventing an admin console or bulk-install flow that doesn't exist for Serin MCP. Each teammate follows the same [quickstart](/serin-mcp/get-started/quickstart) themselves.
+
+## What actually happens with multiple recruiters
+
+- **No org-wide installation.** There's no admin setting that pre-authorizes Serin MCP for every member of an organization, unlike some MCP providers' workspace-level connector installs. Each recruiter runs their own OAuth connection.
+- **Each recruiter picks their own organization at consent.** If a recruiter belongs to more than one organization, the Serin website's consent screen shows an organization picker; the choice is stored on that connection's access token and is fixed until they disconnect and reconnect.
+- **Two recruiters in the same org, connected separately, see the same data** — tools are scoped by organization in the database (row-level security plus explicit org checks in every tool), not by which specific connection made the call. There's no per-connection data partitioning beyond the chosen organization.
+- **Nothing to coordinate between teammates' connections.** One recruiter's session, cache entries, and rate limits are keyed to their own identity — they don't share or interfere with a teammate's.
+
+## When this matters
+
+- Onboarding a new recruiter: they just need a Serin recruiter account with an active membership in the right organization, then they follow the [quickstart](/serin-mcp/get-started/quickstart) on their own client.
+- A recruiter moves between organizations: they disconnect and reconnect, picking the new organization at consent — there's no "switch org" action inside an existing connection.
+- An admin wants visibility into who's connected: today, `serin-mcp` has no admin-facing connection list. Activity any individual connection took is visible the same way any other change to `jobs`/`job_applications` is — through the Serin dashboard itself, not through the MCP server.
+
+## Related
+
+- [How Serin MCP connections work](/serin-mcp/overview/how-connections-work)
+- [Quickstart](/serin-mcp/get-started/quickstart)
+- [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude)
+- [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt)

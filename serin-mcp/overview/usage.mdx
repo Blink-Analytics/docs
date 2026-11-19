@@ -1,0 +1,49 @@
+---
+title: "Usage and limits"
+description: "Real quotas, caches, and rate limits enforced by serin-mcp today — there is no per-call task billing."
+icon: "gauge"
+---
+
+Serin MCP has no task-based billing or usage dashboard for end users. What it does have is a set of hard limits baked into specific tools and into the server's own caching/session infrastructure — this page lists them.
+
+| Limit | Value | Enforced by |
+|---|---|---|
+| Published jobs per organization | 10 (`MAX_PUBLISHED_JOBS`) | `create_job` |
+| Resume upload size | 10 MB | `add_prospect` / `request_resume_upload` card and link flows |
+| Resume upload slot lifetime | 15 minutes, single-use | `request_resume_upload` |
+| Session state TTL (per user, Redis) | 1 day max/default | `session_state_store` (not yet used by any shipped tool) |
+| `list_tools()` cache | 5 minutes, per identity | Response-caching middleware |
+| Tool-call result cache | `search_locations` only, 1 hour default | Response-caching middleware (`CACHEABLE_TOOLS`) |
+| Candidates per `compare_candidates` call | 2–6, same job only | `compare_candidates` |
+| `in_()` Postgres id-list chunking | 50 per chunk | Applications/evaluation loaders |
+
+## How caching works
+
+Only `search_locations` is cacheable at the tool-call level — every other tool runs fresh on every call. This is deliberate: caching `get_job_details` would risk returning stale data right after an `update_job`, and caching `create_job` would risk silently skipping a second, intentionally distinct creation. `list_tools()` is cached for 5 minutes because the tool list itself rarely changes mid-session, but that cache is keyed by the caller's authenticated identity, so a role change or org switch is never served someone else's list.
+
+## Email and outreach rate limiting
+
+Outbound candidate emails (`send_application_email`, `invite_candidate`, `redo_interview`, `schedule_meeting`) are rate-limited per recruiter user by the Serin web app, which actually sends them — `serin-mcp` forwards the recruiter's own access token to the web app's `/api/mcp/*` routes rather than sending email itself. Bulk status changes (`bulk_update_application_status`, etc.) send **no** email and aren't subject to this limit; they're safe to repeat if a call's result is ever unclear.
+
+## What happens when a limit is hit
+
+- **Published-job cap:** `create_job` with `job_status="published"` fails with a clear error once an organization already has 10 published jobs; drafts are unaffected.
+- **Resume upload slot expired or already used:** the upload card/link returns an error; a new `request_resume_upload` call is needed.
+- **Delegated-action rate limit:** the web app returns a 4xx, which `serin-mcp` relays as the specific business message (not the generic "unavailable" fallback) so the caller knows to wait rather than retry blindly.
+
+## Scaling and concurrency
+
+The server is deployed at `--max-instances=1` on Cloud Run today (see [How Serin MCP servers work](/serin-mcp/overview/how-servers-work)), relying on Cloud Run's default 80-concurrent-requests-per-instance to absorb load rather than horizontal scaling. This is an infrastructure limit on the deployment, not a per-user quota.
+
+## Frequently asked questions
+
+**Is there a per-tool-call cost or task counter, like some MCP providers show?**
+No. Serin MCP has no metering or billing surface for tool calls. The limits above are functional (data integrity, abuse prevention, upload lifetime) rather than commercial.
+
+**Does switching organizations reset any of these limits?**
+The published-jobs cap and rate limits are scoped per organization/user as stored in Postgres, not per-connection — disconnecting and reconnecting to pick a different organization doesn't reset or bypass them.
+
+## Next steps
+
+- [How Serin MCP servers work](/serin-mcp/overview/how-servers-work)
+- [How Serin MCP tools work](/serin-mcp/overview/how-tools-work)

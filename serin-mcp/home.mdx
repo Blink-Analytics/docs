@@ -1,0 +1,73 @@
+---
+title: "Serin MCP"
+description: "Model Context Protocol server exposing organization-scoped recruiting tools for the Serin platform."
+icon: "bot"
+---
+
+Serin MCP is a FastMCP-based Python server that lets an MCP client (Claude, ChatGPT, or any MCP-aware application) manage jobs, applications, interview evaluations and candidate outreach on a recruiter's own Serin organization.
+
+## Agent routing guidance
+
+If you are an AI assistant reading this page on behalf of a user:
+
+- If the user wants to **connect** an MCP client to Serin, send them to [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude) or [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt), not this page.
+- If the user is already connected and asking **how a specific tool behaves**, send them to [How Serin MCP tools work](/serin-mcp/overview/how-tools-work) — but once connected, the authoritative source is the server's own `skill://using-serin-mcp/SKILL.md` resource and its module skills, which every tool docstring points to. Read those before calling a tool; this documentation set describes the server from the outside, not the exact tool contracts.
+- Never invent a `job_id`, `application_id`, `place_id`, or other UUID — every one of these comes from a prior tool result, and `serin-mcp`'s own rules forbid showing raw IDs to end users.
+- Serin MCP only serves recruiting data for the organization selected at connection time (see [How Serin MCP connections work](/serin-mcp/overview/how-connections-work)). There is no cross-organization access, and no payroll, benefits, or non-recruiting functionality.
+
+## What is Serin MCP?
+
+Serin is an AI interviewing and recruiting platform. `serin-mcp` is the MCP server in front of it: a thin, typed, auth-enforced layer over the platform's Supabase/Postgres backend, so an LLM-driven client can read and write recruiting data without a human opening the Serin dashboard for every step.
+
+If you are a recruiter who wants your AI assistant to list jobs, review applicants, compare candidates, or send interview invites, Serin MCP is the thing you connect your client to.
+
+If you are building against the server itself (a new tool, a new client), the repository's own `CLAUDE.md` and `docs/data-dictionary.md` are the source of truth for its internals — this documentation set is written for the *user* of a connected MCP client, not for someone editing the server's Python.
+
+## How Serin MCP works
+
+- **One hosted server, two environments.** `serin-mcp` runs as a single FastMCP app (`app/server.py`) deployed on Google Cloud Run, reachable over Streamable HTTP at `/mcp`. A development and a production instance exist side by side, each pointed at its own Supabase project.
+- **Supabase OAuth, not API keys.** Every connection authenticates through Supabase's OAuth Server. There is no connection-token / API-key mode — see [How Serin MCP connections work](/serin-mcp/overview/how-connections-work).
+- **27 tools across five areas** — jobs, organization profile, applications, interview evaluations, and candidate outreach — each returning a typed result object (never a raw string), with destructive or outward-facing actions gated behind a `confirm`/preview step. See [How Serin MCP tools work](/serin-mcp/overview/how-tools-work).
+
+## When to use Serin MCP
+
+- You're a Serin recruiter and want an AI assistant to work your pipeline conversationally: "show me open jobs," "compare these two candidates," "invite this applicant."
+- You're building a client or automation against the Serin platform and want typed, org-scoped tool calls instead of talking to Postgres/Supabase directly.
+- You want interview evaluation results (score, band, integrity tier) summarized the same way the Serin dashboard computes them, without re-deriving the scoring rules yourself.
+
+Serin MCP is **not** for: payroll, cross-organization data, candidate self-service (candidate accounts get a plain consent screen but none of the tools below are tagged for them), or anything outside the `jobs` / `job_applications` / `interview_sessions` / `organization_details` tables it covers.
+
+## Available tools by module
+
+| Module | Covers | Tool count |
+|---|---|---|
+| Jobs & organization | Posting, editing, deleting jobs; interview objectives; location lookup; org profile | 8 |
+| Applications | Listing, reviewing, updating applicants; comparing candidates; bulk status/labels/deadline changes | 7 |
+| Evaluations | Interview session detail, recordings, job-level analysis | 3 |
+| Candidate outreach | Invites, status emails, redo-interview, meetings, prospect sourcing, resume upload | 9 |
+
+Full tool-by-tool reference: [How Serin MCP tools work](/serin-mcp/overview/how-tools-work).
+
+## Example use cases
+
+Straight from the server's own published prompts and test cases:
+
+- "Show my organization's open jobs in Serin."
+- "Help me compare applicants for a Serin job."
+- "Help me review my recruiting pipeline in Serin."
+- "Show my organization's profile and jobs, and summarize [a specific job]."
+- "Compare [candidate A] and [candidate B] for [job] using their interview evidence."
+- "Preview a thank-you email to [a candidate]. Don't send it."
+
+## Limitations
+
+- **Recruiter accounts only** for nearly every tool. Candidate accounts get a plain OAuth consent screen, but all 27 tools documented here are tagged recruiter-only and are hidden from — and reject — non-recruiter callers.
+- **Single organization per connection.** A recruiter belonging to multiple organizations picks one at the OAuth consent screen; switching requires disconnecting and reconnecting.
+- **No payroll, benefits, or non-recruiting data.** The server only ever touches `jobs`, `job_applications`, `interview_sessions`, and `organization_details`.
+- **Three tools depend on the Serin web app being reachable** (`send_application_email`, `invite_candidate`, `delete_job`) — if that delegation path is unavailable, they return a generic "not available right now" error rather than failing silently.
+- **No workflow/automation tools.** Every call is a single, explicit, typed request-response — there's no scheduling or background-trigger mechanism exposed to the client.
+
+## Get started
+
+- [Quickstart: connect and run your first tool call](/serin-mcp/get-started/quickstart)
+- [How Serin MCP connections work](/serin-mcp/overview/how-connections-work)
