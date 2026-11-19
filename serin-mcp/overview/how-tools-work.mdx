@@ -8,12 +8,11 @@ Serin MCP exposes 27 tools, every one tagged to an audience, versioned individua
 
 ## Tool model
 
-Each tool carries, in its `@mcp.tool(...)` decorator:
+Each tool carries:
 
-- **A version string** (plain semver, e.g. `"3.0.2"`), bumped whenever the tool's parameters or return shape change in a breaking way.
-- **A tag set** — `recruiter` for every tool below (none currently carry `general`, since there is no tool shared across every account type yet).
-- **A safety annotation profile** — `READ_ONLY`, `CREATE`, `UPDATE`, `DELETE`, or `OUTREACH` — an advisory hint a client can use to decide whether to skip its own confirmation UI for a read-only call. These are hints only; the real guards are the role-visibility middleware and each tool's own `confirm` parameter.
-- **A title** and a Google-style `Args:` docstring section, which the server turns into per-parameter descriptions in the tool's input schema.
+- **A version** (semver, e.g. `3.0.2`), bumped whenever a tool's parameters or return shape change in a breaking way — useful if your client pins or logs tool versions.
+- **An audience tag** — every tool below is tagged `recruiter`.
+- **A safety annotation** — `READ_ONLY`, `CREATE`, `UPDATE`, `DELETE`, or `OUTREACH` — an advisory hint a client can use to decide whether to skip its own confirmation UI for a read-only call. These are hints only; the real guards are role-based access control and each tool's own `confirm` parameter.
 - **A pointer to the module skill that documents it** (`skill://serin-<module>/SKILL.md`) — tool descriptions reach the connecting model even when it never reads MCP resources, so the pointer is in the description text itself, not only in the skill.
 
 ## Role gating
@@ -31,7 +30,7 @@ A caller is expected to show the preview, get an explicit go-ahead, then call ag
 
 ## Caching
 
-Of all 27 tools, exactly one — `search_locations` — has its results cached (Redis-backed, shared across calls from the same identity). Every other tool call runs fresh every time, because its answer either depends on data the server might have just written, or must never be replayed from a stale cache (e.g. `get_job_details` right after `update_job`, or a repeated `create_job`). `list_tools()` responses are cached for 5 minutes per identity.
+Of all 27 tools, exactly one — `search_locations` — has its results cached, shared across calls from the same identity. Every other tool call runs fresh every time, because its answer either depends on data the server might have just written, or must never be replayed from a stale cache (e.g. `get_job_details` right after `update_job`, or a repeated `create_job`). `list_tools()` responses are cached for 5 minutes per identity.
 
 ## Full tool reference
 
@@ -40,8 +39,8 @@ Of all 27 tools, exactly one — `search_locations` — has its results cached (
 | Tool | Version | What it does |
 |---|---|---|
 | `get_organization_details` | 1.1.0 | Reads the caller's org profile (name, email, phone, parsed description/about, growth opportunities). |
-| `update_organization_details` | 1.0.0 | Writes the org profile under RLS (owner/admin/manager only). |
-| `search_locations` | 1.0.1 | Resolves a free-text place query to a Google `place_id` + address components — the only way a job's ONSITE/HYBRID location is set; text city/country is never accepted directly. |
+| `update_organization_details` | 1.0.0 | Writes the org profile (owner/admin/manager only). |
+| `search_locations` | 1.0.1 | Resolves a free-text place query to a `place_id` + address components — the only way a job's ONSITE/HYBRID location is set; text city/country is never accepted directly. |
 | `list_organization_jobs` | 2.0.1 | Lists the org's jobs with status/visibility filters, title search, paging, and per-job application/interview counts. |
 | `get_job_details` | 1.0.1 | Full detail for one job, including objectives, custom questions, and salary. |
 | `create_job` | 3.0.2 | Drafts or publishes a job, mirroring the website's New Job flow (objectives, location via `place_id`, visibility, salary defaults). |
@@ -75,7 +74,7 @@ Of all 27 tools, exactly one — `search_locations` — has its results cached (
 |---|---|---|
 | `send_application_email` | 1.0.2 | Previews, then sends, a status email to the candidate on file for an application — no arbitrary recipients. |
 | `redo_interview` | 1.0.1 | Sends a redo-interview invite to the address on file; rolls back on email failure. |
-| `schedule_meeting` | 1.0.0 | Previews, then books, a LiveKit meeting with a candidate and emails both sides. |
+| `schedule_meeting` | 1.0.0 | Previews, then books, a video meeting with a candidate and emails both sides. |
 | `request_resume_upload` | 2.0.0 | Stages a single-use, 15-minute resume-upload slot — a card for clients that support it, a link otherwise. |
 | `upload_resume_file` | 1.0.0 | Card-only tool: fills a staged upload slot with file bytes over the recruiter's own authenticated connection. |
 | `add_prospect` | 1.2.1 | Adds a candidate with a resume on file but no invite yet (inline bytes, an https link, or a staged upload id). |
@@ -84,7 +83,7 @@ Of all 27 tools, exactly one — `search_locations` — has its results cached (
 
 ## Where this is actually documented for a connected model
 
-This page is a map, not the contract. Once connected, a client should read `skill://using-serin-mcp/SKILL.md` first (it covers auth, the "never show raw IDs" rule, and which module to read next), then the module skill for the task at hand. Every tool's own docstring repeats the pointer to its module, since not every client surfaces MCP resources to the model automatically.
+This page is a map, not the contract. Once connected, a client should read `skill://using-serin-mcp/SKILL.md` first (it covers auth, the "never show raw IDs" rule, and which module to read next), then the module skill for the task at hand. Every tool's own description repeats the pointer to its module, since not every client surfaces MCP resources to the model automatically.
 
 ## Next steps
 

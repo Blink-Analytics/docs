@@ -1,0 +1,32 @@
+---
+title: "Connect with Cursor"
+description: "Install the Serin plugin from the Cursor marketplace and authenticate."
+icon: "code"
+---
+
+This page is about Cursor specifically. For Claude, see [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude); for Claude Code, see [Connect Serin MCP to Claude Code](/serin-mcp/get-started/connect/claude-code); for ChatGPT, see [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt); for Codex, see [Connect Serin MCP to Codex](/serin-mcp/get-started/connect/codex); for OpenCode, see [Connect Serin MCP to OpenCode](/serin-mcp/get-started/connect/opencode).
+
+## Before you begin
+
+- A Serin recruiter account (candidate accounts can connect but see no tools).
+- Cursor installed.
+
+## Connect Serin MCP to Cursor
+
+1. Install the **serin-mcp** plugin from the Cursor marketplace. It adds the `serin` MCP server and the skills that teach Cursor how to use the tools safely — there's nothing to configure or install locally.
+2. Sign in to Serin when Cursor prompts you, or open **Customize**, find the `serin` MCP server, and choose **Authenticate**.
+3. Pick an organization at the consent screen if your recruiter account belongs to more than one.
+
+There's no API key to paste — authentication is OAuth only.
+
+## Verify the result
+
+- Ask Cursor's agent to list your organization's jobs (`list_organization_jobs`). A correct connection returns your actual job list, not an error.
+- If tools don't appear or every call errors with "Not authenticated," open **Customize**, find the `serin` MCP server, and choose **Authenticate** again.
+- If you see "Not authorized: recruiter role required," you're connected but signed in as a candidate account — these tools are recruiter-only.
+
+## Next steps
+
+- [How Serin MCP connections work](/serin-mcp/overview/how-connections-work)
+- [How Serin MCP tools work](/serin-mcp/overview/how-tools-work)
+- [Quickstart](/serin-mcp/get-started/quickstart)

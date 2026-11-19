@@ -1,56 +1,26 @@
 ---
-title: "Connect Serin MCP to Claude"
-description: "Set up serin-mcp with Claude Desktop (via STDIO proxy), Claude Code, or any OAuth-capable MCP client."
+title: "Connect with Claude"
+description: "Add serin-mcp as a custom connector in Claude and authenticate with OAuth."
 icon: "message-circle"
 ---
 
-This page covers every Claude-side path into `serin-mcp`: Claude Desktop (which needs a small local proxy), and Claude Code or any other client that can speak Streamable HTTP with OAuth directly.
-
-This page is about Claude specifically. For ChatGPT, see [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt).
+This page is about Claude (claude.ai and Claude Desktop), which connects to Serin as a custom connector rather than a plugin. For Claude Code, see [Connect Serin MCP to Claude Code](/serin-mcp/get-started/connect/claude-code); for ChatGPT, see [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt); for Codex, see [Connect Serin MCP to Codex](/serin-mcp/get-started/connect/codex); for Cursor, see [Connect Serin MCP to Cursor](/serin-mcp/get-started/connect/cursor); for OpenCode, see [Connect Serin MCP to OpenCode](/serin-mcp/get-started/connect/opencode).
 
 ## Before you begin
 
 - A Serin recruiter account (candidate accounts can connect but see no tools).
-- The `serin-mcp` server reachable — either the hosted production URL, or a local dev instance you've started with `uv run serin-mcp dev`.
-- For Claude Desktop specifically: a local clone of the `serin-mcp` repository, since the STDIO proxy is a script in it (`client/claude_desktop_proxy.py`), not a hosted artifact.
+- The Serin MCP server URL: `https://mcp.serin-ai.com/mcp`.
 
-## Connect Serin MCP to Claude Desktop
+## Connect Serin MCP to Claude
 
-Claude Desktop only launches local STDIO subprocesses — it cannot speak HTTP to `serin-mcp` directly. `serin-mcp` ships a proxy for exactly this:
-
-1. **Start the real server.** In one terminal: `uv run serin-mcp dev` (or `prod`).
-2. **Register the proxy with Claude Desktop**, either:
-   - Run `uv run fastmcp install claude-desktop client/claude_desktop_proxy.py`, or
-   - Hand-edit `claude_desktop_config.json`:
-     ```json
-     {
-       "mcpServers": {
-         "serin-mcp": {
-           "command": "uv",
-           "args": ["run", "--directory", "/absolute/path/to/serin_mcp",
-                     "serin-mcp-claude-desktop", "dev"]
-         }
-       }
-     }
-     ```
-3. **Restart Claude Desktop.** The proxy launches as a subprocess, opens a browser for the same Supabase OAuth flow described in [How Serin MCP connections work](/serin-mcp/overview/how-connections-work), and bridges every tool call over to the real HTTP server once you approve.
-
-The proxy only forwards calls — it has no tools or logic of its own — so everything in [How Serin MCP tools work](/serin-mcp/overview/how-tools-work) applies unchanged.
-
-## Connect Serin MCP to Claude Code (or any HTTP+OAuth MCP client)
-
-Claude Code, and most other MCP clients that support Streamable HTTP with OAuth, can point at the server URL directly — no proxy needed:
-
-1. Add `serin-mcp` as an MCP server pointed at the server's `/mcp` endpoint (production: `https://mcp.serin-ai.com/mcp`; local dev: `http://127.0.0.1:8001/mcp`).
-2. Set its auth mode to OAuth (in FastMCP's own terms, this is `auth="oauth"` — the equivalent setting in Claude Code's own MCP configuration).
-3. On first use, approve the browser-based consent flow (and pick an organization if your recruiter account belongs to more than one).
-
-The bundled `serin-mcp-client` (`uv run serin-mcp-client dev`) is the same flow, used as a minimal reference client for testing rather than a day-to-day interface.
+1. Go to **Settings → Connectors → Add custom connector**.
+2. Enter a name (for example "Serin") and the server URL `https://mcp.serin-ai.com/mcp`.
+3. Choose **Connect**, then sign in with your Serin recruiter account when the OAuth consent screen opens — pick an organization if your account belongs to more than one.
 
 ## Verify the result
 
 - Ask Claude to list your organization's jobs (`list_organization_jobs`). A correct connection returns your actual job list, not an error.
-- If tools don't appear or every call errors with "Not authenticated," the OAuth flow didn't complete — reconnect and make sure you approved the consent screen rather than closing the browser tab.
+- If the connector shows as disconnected, or every call errors with "Not authenticated," remove and re-add it to force the OAuth flow to run again.
 - If you see "Not authorized: recruiter role required," you're connected but signed in as a candidate account — these tools are recruiter-only.
 
 ## Next steps

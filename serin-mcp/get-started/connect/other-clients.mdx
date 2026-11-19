@@ -1,0 +1,43 @@
+---
+title: "Connect with other MCP clients"
+description: "Add serin-mcp as a remote MCP server over Streamable HTTP with OAuth — for Gemini CLI, VS Code, and any other MCP-aware client."
+icon: "plug"
+---
+
+This page covers any MCP client without a dedicated page here — for example Gemini CLI or VS Code. For Claude, Claude Code, ChatGPT, Codex, Cursor, or OpenCode, use their dedicated pages instead.
+
+## Before you begin
+
+- A Serin recruiter account (candidate accounts can connect but see no tools).
+- An MCP client that supports Streamable HTTP and OAuth.
+
+## Connect Serin MCP to your client
+
+1. Add a remote MCP server using Streamable HTTP, pointed at:
+   ```text
+   https://mcp.serin-ai.com/mcp
+   ```
+2. Your client must support OAuth for MCP. The server advertises discovery and dynamic client registration, so most OAuth-capable clients register themselves automatically — there's no manually-issued client ID or secret to enter.
+3. On first use, approve the browser-based consent flow (and pick an organization if your recruiter account belongs to more than one).
+
+## Add the skills
+
+To give the agent the skills that teach it how to use the tools safely, either run:
+
+```bash
+npx skills add Blink-Analytics/serin-ai
+```
+
+or copy the skill files into the folder your client reads skills from.
+
+## Verify the result
+
+- Ask the client to list your organization's jobs (`list_organization_jobs`). A correct connection returns your actual job list, not an error.
+- If tools don't appear or every call errors with "Not authenticated," the OAuth flow didn't complete — reconnect and make sure you approved the consent screen rather than closing the browser tab.
+- If you see "Not authorized: recruiter role required," you're connected but signed in as a candidate account — these tools are recruiter-only.
+
+## Next steps
+
+- [How Serin MCP connections work](/serin-mcp/overview/how-connections-work)
+- [How Serin MCP tools work](/serin-mcp/overview/how-tools-work)
+- [Quickstart](/serin-mcp/get-started/quickstart)

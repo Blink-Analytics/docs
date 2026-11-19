@@ -1,0 +1,47 @@
+---
+title: "Connect with OpenCode"
+description: "Add serin-mcp to your OpenCode configuration, install its skills, and authenticate with opencode mcp auth."
+icon: "terminal"
+---
+
+This page is about OpenCode specifically. For Claude, see [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude); for Claude Code, see [Connect Serin MCP to Claude Code](/serin-mcp/get-started/connect/claude-code); for ChatGPT, see [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt); for Codex, see [Connect Serin MCP to Codex](/serin-mcp/get-started/connect/codex); for Cursor, see [Connect Serin MCP to Cursor](/serin-mcp/get-started/connect/cursor).
+
+## Before you begin
+
+- A Serin recruiter account (candidate accounts can connect but see no tools).
+- OpenCode installed.
+
+## Connect Serin MCP to OpenCode
+
+1. **Add the server.** Add the following to `~/.config/opencode/opencode.json` (global) or to `opencode.json` in your project:
+   ```json
+   {
+     "$schema": "https://opencode.ai/config.json",
+     "mcp": {
+       "serin": { "type": "remote", "url": "https://mcp.serin-ai.com/mcp", "enabled": true }
+     }
+   }
+   ```
+2. **Install the skills** that teach OpenCode how to use the tools safely:
+   ```bash
+   npx skills add Blink-Analytics/serin-ai
+   ```
+3. **Authenticate:**
+   ```bash
+   opencode mcp auth serin
+   ```
+   This opens a browser for the OAuth consent flow, including the organization picker if your account belongs to more than one.
+
+You've now connected Serin MCP to OpenCode.
+
+## Verify the result
+
+- Ask OpenCode to list your organization's jobs (`list_organization_jobs`). A correct connection returns your actual job list, not an error.
+- If tools don't appear or every call errors with "Not authenticated," run `opencode mcp auth serin` again and make sure you approve the consent screen rather than closing the browser tab.
+- If you see "Not authorized: recruiter role required," you're connected but signed in as a candidate account — these tools are recruiter-only.
+
+## Next steps
+
+- [How Serin MCP connections work](/serin-mcp/overview/how-connections-work)
+- [How Serin MCP tools work](/serin-mcp/overview/how-tools-work)
+- [Quickstart](/serin-mcp/get-started/quickstart)

@@ -8,38 +8,48 @@ By the end of this quickstart, your MCP client will be authenticated against Ser
 
 ## Agent routing guidance
 
-1. If the user names a specific client, send them to its dedicated page: [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude) or [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt). This page covers the generic flow and the FastMCP reference client used for local testing.
-2. Never tell a user to paste an API key or bearer token into their client's config — `serin-mcp` only supports interactive OAuth.
+1. If the user names a specific client, send them to its dedicated page: [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude), [Connect Serin MCP to Claude Code](/serin-mcp/get-started/connect/claude-code), [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt), [Connect Serin MCP to Codex](/serin-mcp/get-started/connect/codex), [Connect Serin MCP to Cursor](/serin-mcp/get-started/connect/cursor), [Connect Serin MCP to OpenCode](/serin-mcp/get-started/connect/opencode), or [Connect Serin MCP to other MCP clients](/serin-mcp/get-started/connect/other-clients). This page covers the generic connection flow.
+2. Never tell a user to paste an API key or bearer token into their client's config — **Serin MCP** only supports interactive OAuth.
 3. If a user is a candidate (not a recruiter), tell them none of the tools in this server apply to their account — don't attempt to connect and then explain a `ToolError` after the fact.
 
 ## Before you begin
 
 - **A Serin recruiter account**, active in at least one organization. Candidate accounts can complete the connection but every tool is hidden/rejected for them.
-- **The server URL you're connecting to** — production is `https://mcp.serin-ai.com/mcp`; a local development instance is `http://127.0.0.1:8001/mcp` (started with `uv run serin-mcp dev`).
+- **The server URL you're connecting to**: `https://mcp.serin-ai.com/mcp`.
 
 ## 1. Connect your MCP client
 
-### Using the bundled reference client (local testing)
+### Using Claude
 
-With a `serin-mcp` server already running (`uv run serin-mcp dev` or `prod`, in one terminal), connect with:
+See [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude) — add Serin as a custom connector under Settings → Connectors and authenticate with OAuth.
 
-```bash
-uv run serin-mcp-client dev
-```
+### Using Claude Code
 
-This opens a browser for Supabase login, then the Serin website's consent screen (with the organization picker if you belong to more than one org — see [How Serin MCP connections work](/serin-mcp/overview/how-connections-work)). Once approved, it lists every tool your account can see and lets you call one interactively.
-
-### Using Claude Desktop, Claude Code, or another MCP client
-
-See [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude) — Claude Desktop needs a small local STDIO proxy because it only launches local subprocesses, while Claude Code and most other MCP-over-HTTP clients can point straight at the server URL with `auth="oauth"`.
+See [Connect Serin MCP to Claude Code](/serin-mcp/get-started/connect/claude-code) — install the Serin plugin from its marketplace, then authenticate from `/mcp`.
 
 ### Using ChatGPT
 
-See [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt) — Serin ships a published plugin (streamable HTTP, OAuth with dynamic client registration) rather than requiring a manually-configured custom connector.
+See [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt) — search for Serin in ChatGPT's plugin directory (or add it as a custom MCP server) and authenticate with OAuth.
+
+### Using Codex
+
+See [Connect Serin MCP to Codex](/serin-mcp/get-started/connect/codex) — add the server with the Codex CLI, sign in, then install the skills with the skills CLI.
+
+### Using Cursor
+
+See [Connect Serin MCP to Cursor](/serin-mcp/get-started/connect/cursor) — install the Serin plugin from the Cursor marketplace and authenticate.
+
+### Using OpenCode
+
+See [Connect Serin MCP to OpenCode](/serin-mcp/get-started/connect/opencode) — add the server to your OpenCode configuration, install the skills, and authenticate with `opencode mcp auth`.
+
+### Using another MCP client
+
+See [Connect Serin MCP to other MCP clients](/serin-mcp/get-started/connect/other-clients) — add a remote MCP server over Streamable HTTP with OAuth.
 
 ## 2. Read the entry skill before calling anything
 
-Immediately after connecting, read the `skill://using-serin-mcp/SKILL.md` resource (most clients expose this via a resource-read tool; if yours doesn't surface resources to the model automatically, the server's `initialize` instructions and every tool's own docstring repeat the essential pointer). It covers:
+Immediately after connecting, read the `skill://using-serin-mcp/SKILL.md` resource (most clients expose this via a resource-read tool; if yours doesn't surface resources to the model automatically, the server's `initialize` instructions and every tool's own description repeat the essential pointer). It covers:
 
 - The "never show raw IDs to the end user" rule.
 - The `confirm`/preview pattern every mutating tool follows.

@@ -1,0 +1,36 @@
+---
+title: "Connect with Claude Code"
+description: "Install the Serin plugin for Claude Code from its marketplace and authenticate."
+icon: "puzzle"
+---
+
+This page is about Claude Code specifically. For Claude (claude.ai and Claude Desktop), see [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude); for ChatGPT, see [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt); for Codex, see [Connect Serin MCP to Codex](/serin-mcp/get-started/connect/codex); for Cursor, see [Connect Serin MCP to Cursor](/serin-mcp/get-started/connect/cursor); for OpenCode, see [Connect Serin MCP to OpenCode](/serin-mcp/get-started/connect/opencode).
+
+## Before you begin
+
+- A Serin recruiter account (candidate accounts can connect but see no tools).
+- Claude Code installed.
+
+## Connect Serin MCP to Claude Code
+
+1. Add the Serin plugin marketplace and install the plugin:
+   ```text
+   /plugin marketplace add Blink-Analytics/serin-ai
+   /plugin install serin-mcp@serin-labs
+   ```
+2. Run `/mcp`, select **serin**, and choose **Authenticate**.
+3. A browser opens for the OAuth consent flow — sign in with your Serin recruiter account and, if you belong to more than one organization, pick which one this connection should act on.
+
+The plugin installs both the MCP server connection and the skills that teach Claude Code how to use the tools safely — there's nothing else to configure.
+
+## Verify the result
+
+- Ask Claude Code to list your organization's jobs (`list_organization_jobs`). A correct connection returns your actual job list, not an error.
+- If **serin** doesn't appear under `/mcp`, or every call errors with "Not authenticated," run `/mcp`, select **serin**, and choose **Authenticate** again.
+- If you see "Not authorized: recruiter role required," you're connected but signed in as a candidate account — these tools are recruiter-only.
+
+## Next steps
+
+- [How Serin MCP connections work](/serin-mcp/overview/how-connections-work)
+- [How Serin MCP tools work](/serin-mcp/overview/how-tools-work)
+- [Quickstart](/serin-mcp/get-started/quickstart)

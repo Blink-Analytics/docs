@@ -63,16 +63,21 @@
               "serin-mcp/overview/how-connections-work",
               "serin-mcp/overview/how-servers-work",
               "serin-mcp/overview/how-tools-work",
-              "serin-mcp/overview/usage"
-            ]
-          },
-          {
-            "group": "MCP Get Started",
-            "pages": [
-              "serin-mcp/get-started/quickstart",
-              "serin-mcp/get-started/connect/claude",
-              "serin-mcp/get-started/connect/chatgpt",
-              "serin-mcp/get-started/rollout/overview"
+              "serin-mcp/overview/usage",
+              {
+                "group": "MCP Get Started",
+                "pages": [
+                  "serin-mcp/get-started/quickstart",
+                  "serin-mcp/get-started/connect/claude",
+                  "serin-mcp/get-started/connect/claude-code",
+                  "serin-mcp/get-started/connect/chatgpt",
+                  "serin-mcp/get-started/connect/codex",
+                  "serin-mcp/get-started/connect/cursor",
+                  "serin-mcp/get-started/connect/opencode",
+                  "serin-mcp/get-started/connect/other-clients",
+                  "serin-mcp/get-started/rollout/overview"
+                ]
+              }
             ]
           }
         ]
