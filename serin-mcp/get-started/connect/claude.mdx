@@ -1,0 +1,30 @@
+---
+title: "Connect with Claude"
+description: "Add serin-mcp as a custom connector in Claude and authenticate with OAuth."
+icon: "message-circle"
+---
+
+This page is about Claude (claude.ai and Claude Desktop), which connects to Serin as a custom connector rather than a plugin. For Claude Code, see [Connect Serin MCP to Claude Code](/serin-mcp/get-started/connect/claude-code); for ChatGPT, see [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt); for Codex, see [Connect Serin MCP to Codex](/serin-mcp/get-started/connect/codex); for Cursor, see [Connect Serin MCP to Cursor](/serin-mcp/get-started/connect/cursor); for OpenCode, see [Connect Serin MCP to OpenCode](/serin-mcp/get-started/connect/opencode).
+
+## Before you begin
+
+- A Serin recruiter account (candidate accounts can connect but see no tools).
+- The Serin MCP server URL: `https://mcp.serin-ai.com/mcp`.
+
+## Connect Serin MCP to Claude
+
+1. Go to **Settings → Connectors → Add custom connector**.
+2. Enter a name (for example "Serin") and the server URL `https://mcp.serin-ai.com/mcp`.
+3. Choose **Connect**, then sign in with your Serin recruiter account when the OAuth consent screen opens — pick an organization if your account belongs to more than one.
+
+## Verify the result
+
+- Ask Claude to list your organization's jobs (`list_organization_jobs`). A correct connection returns your actual job list, not an error.
+- If the connector shows as disconnected, or every call errors with "Not authenticated," remove and re-add it to force the OAuth flow to run again.
+- If you see "Not authorized: recruiter role required," you're connected but signed in as a candidate account — these tools are recruiter-only.
+
+## Next steps
+
+- [How Serin MCP connections work](/serin-mcp/overview/how-connections-work)
+- [How Serin MCP tools work](/serin-mcp/overview/how-tools-work)
+- [Quickstart](/serin-mcp/get-started/quickstart)

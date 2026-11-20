@@ -1,0 +1,37 @@
+---
+title: "Connect with Codex"
+description: "Add serin-mcp to the Codex CLI and install its skills with the skills CLI."
+icon: "square-terminal"
+---
+
+This page is about the Codex CLI specifically. For ChatGPT, see [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt); for Claude, see [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude); for Claude Code, see [Connect Serin MCP to Claude Code](/serin-mcp/get-started/connect/claude-code); for Cursor, see [Connect Serin MCP to Cursor](/serin-mcp/get-started/connect/cursor); for OpenCode, see [Connect Serin MCP to OpenCode](/serin-mcp/get-started/connect/opencode).
+
+## Before you begin
+
+- A Serin recruiter account (candidate accounts can connect but see no tools).
+- The Codex CLI installed.
+
+## Connect Serin MCP to Codex
+
+1. Add the server and sign in:
+   ```bash
+   codex mcp add serin --url https://mcp.serin-ai.com/mcp
+   codex mcp login serin
+   ```
+   Signing in opens a browser for the OAuth consent flow — sign in with your Serin recruiter account and, if you belong to more than one organization, pick which one this connection should act on.
+2. Install the skills that teach Codex how to use the tools safely:
+   ```bash
+   npx skills add Blink-Analytics/serin-ai
+   ```
+
+## Verify the result
+
+- Ask Codex to list your organization's jobs (`list_organization_jobs`). A correct connection returns your actual job list, not an error.
+- If the call fails with an authentication error, run `codex mcp login serin` again and make sure you approve the consent screen rather than closing the browser tab.
+- If you see "Not authorized: recruiter role required," you're connected but signed in as a candidate account — these tools are recruiter-only.
+
+## Next steps
+
+- [How Serin MCP connections work](/serin-mcp/overview/how-connections-work)
+- [How Serin MCP tools work](/serin-mcp/overview/how-tools-work)
+- [Quickstart](/serin-mcp/get-started/quickstart)

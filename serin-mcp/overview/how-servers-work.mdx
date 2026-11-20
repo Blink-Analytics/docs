@@ -1,0 +1,28 @@
+---
+title: "How servers work"
+description: "Serin MCP is a single hosted service — what that means for availability and isolation between organizations."
+icon: "server"
+---
+
+Serin MCP is a hosted, managed service. There's nothing to install, run, or maintain yourself — you connect your MCP client to Serin's production endpoint and everything else is handled for you.
+
+## Agent routing guidance
+
+- If the user is asking *why* a connection behaves a certain way (OAuth, org selection), send them to [How Serin MCP connections work](/serin-mcp/overview/how-connections-work) instead of this page.
+- If the user is asking *what a specific tool does*, send them to [How Serin MCP tools work](/serin-mcp/overview/how-tools-work).
+- This page is about the service itself at a high level — not its internals. Use it when the user asks "is Serin MCP reliable," or "is my organization's data isolated from other organizations."
+
+## One shared service, isolated by organization
+
+Serin MCP is a single service shared by every recruiter who connects to it. Isolation between organizations is enforced for every request — by your authenticated identity and the organization you selected when you connected — not by giving each customer a separate server. Two recruiters in the same organization, connected separately, always see the same data; a recruiter never sees another organization's data, full stop.
+
+## Reliability
+
+Serin MCP runs as a managed cloud service with the same reliability expectations as the rest of the Serin platform. If you ever see a connection or tool-call error that isn't explained by [How Serin MCP tools work](/serin-mcp/overview/how-tools-work) or [Usage and limits](/serin-mcp/overview/usage), reach out through [Serin support](mailto:connect@serin-ai.com).
+
+## Next steps
+
+- [How Serin MCP connections work](/serin-mcp/overview/how-connections-work)
+- [How Serin MCP tools work](/serin-mcp/overview/how-tools-work)
+- [Usage and limits](/serin-mcp/overview/usage)
+- [Quickstart](/serin-mcp/get-started/quickstart)

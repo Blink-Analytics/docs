@@ -1,0 +1,56 @@
+---
+title: "How connections work"
+description: "OAuth is the only connection method for serin-mcp, including how org selection works for recruiters with multiple organizations."
+icon: "link-2"
+---
+
+Every connection to Serin MCP authenticates via OAuth. There is no API-key or static-token alternative.
+
+## Agent routing guidance
+
+- "Why do I have to log in through a browser" / "why did it ask me to pick an organization" → this page.
+- "How do I actually add this to Claude/ChatGPT/Cursor/OpenCode/etc." → [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude), [Connect Serin MCP to Claude Code](/serin-mcp/get-started/connect/claude-code), [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt), [Connect Serin MCP to Codex](/serin-mcp/get-started/connect/codex), [Connect Serin MCP to Cursor](/serin-mcp/get-started/connect/cursor), [Connect Serin MCP to OpenCode](/serin-mcp/get-started/connect/opencode), or [Connect Serin MCP to other MCP clients](/serin-mcp/get-started/connect/other-clients).
+- Never tell a user to pass an API key, bearer token, or client secret directly into an MCP client config for Serin — the only supported flow is interactive OAuth, opened in a browser.
+
+## What a Serin MCP connection is
+
+A connection is an OAuth session between an MCP client and the **Serin MCP** server. The client is redirected to a Serin login page, then to a consent screen, and is handed back an access token scoped to the signed-in user (and, for recruiters, to one organization — see below).
+
+Serin MCP is reachable at `https://mcp.serin-ai.com/mcp` over Streamable HTTP.
+
+The OAuth server supports **Dynamic Client Registration (DCR)**, so MCP clients that register themselves on first connection (rather than being pre-registered as a named OAuth app) work out of the box — this is what lets most OAuth-capable MCP clients connect without any manually-issued client ID or secret.
+
+## Supported transport
+
+**Serin MCP** serves **Streamable HTTP** at `/mcp`. Clients that support Streamable HTTP with OAuth can connect directly; some clients (such as Claude Code or Cursor) instead package the connection as an installable plugin, so setup goes through that client's own plugin installer rather than manual configuration — see each client's dedicated connect page for specifics.
+
+## Authentication: OAuth only, two account types
+
+| Account type | What the consent screen shows |
+|---|---|
+| Candidate | Client name, requested scopes, redirect target — a plain consent screen. |
+| Recruiter | The same, plus an organization picker if the account belongs to more than one active organization. |
+
+### Organization selection (recruiters)
+
+A recruiter who belongs to multiple organizations chooses, on the consent screen itself, which one the connection will act on. That choice is written into the newly issued access token **before** it's minted, so every tool call made over that connection reads it back and scopes itself to that organization.
+
+- **This choice is fixed for the life of the connection.** There is no per-call organization switch.
+- **To act on a different organization,** disconnect and reconnect — consent (and the organization picker) runs again.
+- A recruiter with only one active organization membership skips the picker; the server falls back to their first active membership automatically.
+
+### What a candidate account can do
+
+Candidate accounts can complete the OAuth flow, but none of the 27 tools documented in [How Serin MCP tools work](/serin-mcp/overview/how-tools-work) are visible to them — every one is tagged recruiter-only, enforced by server-side middleware that re-checks the caller's role on every request (not just at connection time).
+
+## Next steps
+
+- [How Serin MCP servers work](/serin-mcp/overview/how-servers-work)
+- [How Serin MCP tools work](/serin-mcp/overview/how-tools-work)
+- [Connect Serin MCP to Claude](/serin-mcp/get-started/connect/claude)
+- [Connect Serin MCP to Claude Code](/serin-mcp/get-started/connect/claude-code)
+- [Connect Serin MCP to ChatGPT](/serin-mcp/get-started/connect/chatgpt)
+- [Connect Serin MCP to Codex](/serin-mcp/get-started/connect/codex)
+- [Connect Serin MCP to Cursor](/serin-mcp/get-started/connect/cursor)
+- [Connect Serin MCP to OpenCode](/serin-mcp/get-started/connect/opencode)
+- [Connect Serin MCP to other MCP clients](/serin-mcp/get-started/connect/other-clients)

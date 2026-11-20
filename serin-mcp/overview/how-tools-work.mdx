@@ -1,0 +1,92 @@
+---
+title: "How tools work"
+description: "The full list of serin-mcp tools, their versions, confirm/preview conventions, role gating, and where each one is documented."
+icon: "wrench"
+---
+
+Serin MCP exposes 27 tools, every one tagged to an audience, versioned individually, annotated with a safety profile, and returning a typed result instead of a raw string.
+
+## Tool model
+
+Each tool carries:
+
+- **A version** (semver, e.g. `3.0.2`), bumped whenever a tool's parameters or return shape change in a breaking way — useful if your client pins or logs tool versions.
+- **An audience tag** — every tool below is tagged `recruiter`.
+- **A safety annotation** — `READ_ONLY`, `CREATE`, `UPDATE`, `DELETE`, or `OUTREACH` — an advisory hint a client can use to decide whether to skip its own confirmation UI for a read-only call. These are hints only; the real guards are role-based access control and each tool's own `confirm` parameter.
+- **A pointer to the module skill that documents it** (`skill://serin-<module>/SKILL.md`) — tool descriptions reach the connecting model even when it never reads MCP resources, so the pointer is in the description text itself, not only in the skill.
+
+## Role gating
+
+Every tool below is recruiter-only. A non-recruiter caller (a candidate account, or an unauthenticated one) never sees these in `list_tools()`, and calling one directly by name returns a `ToolError` ("Not authorized: recruiter role required"). The check re-reads the caller's role from the database on every call — it is not cached, unlike `list_tools` responses.
+
+## The confirm / preview pattern
+
+Any tool that emails someone, deletes data, or changes many records at once takes a `confirm` (or `dryRun`) parameter, default `false`:
+
+- **Without it:** nothing is written. The tool returns a preview of exactly what would happen — the email that would be sent, the counts that would be affected, the row that would be deleted.
+- **With it (`confirm=true`):** the action actually runs.
+
+A caller is expected to show the preview, get an explicit go-ahead, then call again with `confirm=true`. If a `confirm=true` call's result never comes back (timeout, dropped connection, 5xx), the caller sees an "unconfirmed" result rather than a definite failure — the action may have happened, so blindly retrying could, for example, email a candidate twice.
+
+## Caching
+
+Of all 27 tools, exactly one — `search_locations` — has its results cached, shared across calls from the same identity. Every other tool call runs fresh every time, because its answer either depends on data the server might have just written, or must never be replayed from a stale cache (e.g. `get_job_details` right after `update_job`, or a repeated `create_job`). `list_tools()` responses are cached for 5 minutes per identity.
+
+## Full tool reference
+
+### Jobs & organization — `skill://serin-jobs/SKILL.md`
+
+| Tool | Version | What it does |
+|---|---|---|
+| `get_organization_details` | 1.1.0 | Reads the caller's org profile (name, email, phone, parsed description/about, growth opportunities). |
+| `update_organization_details` | 1.0.0 | Writes the org profile (owner/admin/manager only). |
+| `search_locations` | 1.0.1 | Resolves a free-text place query to a `place_id` + address components — the only way a job's ONSITE/HYBRID location is set; text city/country is never accepted directly. |
+| `list_organization_jobs` | 2.0.1 | Lists the org's jobs with status/visibility filters, title search, paging, and per-job application/interview counts. |
+| `get_job_details` | 1.0.1 | Full detail for one job, including objectives, custom questions, and salary. |
+| `create_job` | 3.0.2 | Drafts or publishes a job, mirroring the website's New Job flow (objectives, location via `place_id`, visibility, salary defaults). |
+| `update_job` | 2.0.2 | Edits an existing job (deadline rules, publish/unpublish, question-count revalidation on duration changes). |
+| `delete_job` | 2.0.1 | Two-step delete: a preview (counts of applications/interviews affected) without `confirm`, then the actual delete with `confirm=true`. |
+
+### Applications — `skill://serin-applications/SKILL.md`
+
+| Tool | Version | What it does |
+|---|---|---|
+| `list_job_applications` | 2.0.1 | Lists an application pipeline with filters, search (including candidate email matching), and computed sorts (score, integrity, date, name). |
+| `get_application_detail` | 2.1.1 | Full detail on one application: candidate profile, evaluation, primary interview attempt. |
+| `compare_candidates` | 2.1.1 | Side-by-side comparison of 2–6 applications for the *same* job. |
+| `update_application` | 2.0.1 | Status/notes/labels/deadline updates, with milestone-timestamp and status-transition rules (no reverting a completed interview to `applied`; `withdrawn` is locked). |
+| `invite_candidate` | 3.0.1 | Creates the application and sends the interview invite email (through the Serin web app) — the "add/invite someone" tool. |
+| `bulk_update_application_status` | 1.0.1 | Changes status on many applications at once; safe to repeat. |
+| `bulk_update_application_labels` | 1.0.1 | Bulk label changes. |
+| `bulk_update_application_deadline` | 1.0.1 | Bulk deadline changes. |
+
+### Evaluations — `skill://serin-evaluations/SKILL.md`
+
+| Tool | Version | What it does |
+|---|---|---|
+| `get_interview_session` | 2.0.1 | One interview session's full report: score, band, skill cards, integrity signals, transcript excerpt. |
+| `get_interview_recording` | 2.0.1 | Returns a link to the web app's player page for a session's recording — never a raw signed storage URL. |
+| `get_job_analysis` | 1.0.1 | Funnel counts and aggregate interview results for one job. |
+
+### Candidate outreach — `skill://serin-candidate-outreach/SKILL.md`
+
+| Tool | Version | What it does |
+|---|---|---|
+| `send_application_email` | 1.0.2 | Previews, then sends, a status email to the candidate on file for an application — no arbitrary recipients. |
+| `redo_interview` | 1.0.1 | Sends a redo-interview invite to the address on file; rolls back on email failure. |
+| `schedule_meeting` | 1.0.0 | Previews, then books, a video meeting with a candidate and emails both sides. |
+| `request_resume_upload` | 2.0.0 | Stages a single-use, 15-minute resume-upload slot — a card for clients that support it, a link otherwise. |
+| `upload_resume_file` | 1.0.0 | Card-only tool: fills a staged upload slot with file bytes over the recruiter's own authenticated connection. |
+| `add_prospect` | 1.2.1 | Adds a candidate with a resume on file but no invite yet (inline bytes, an https link, or a staged upload id). |
+| `screen_prospect_resume` | 1.0.1 | Manual resume screening for a prospect; no email, no confirm step (no outward effect). |
+| `invite_prospect` | 1.0.1 | Converts an existing prospect into an invited applicant. |
+
+## Where this is actually documented for a connected model
+
+This page is a map, not the contract. Once connected, a client should read `skill://using-serin-mcp/SKILL.md` first (it covers auth, the "never show raw IDs" rule, and which module to read next), then the module skill for the task at hand. Every tool's own description repeats the pointer to its module, since not every client surfaces MCP resources to the model automatically.
+
+## Next steps
+
+- [How Serin MCP connections work](/serin-mcp/overview/how-connections-work)
+- [Usage and limits](/serin-mcp/overview/usage)
+- [Quickstart](/serin-mcp/get-started/quickstart)
