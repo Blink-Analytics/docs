@@ -3,6 +3,321 @@ title: "Product Updates"
 description: "Get started with Serin by choosing your role and setting up your account."
 icon: "star"
 ---
+
+<Update label="November 2026" description="Credit History & Call Scheduling" tags={["Serin v1.7.1"]}>
+# New Features
+
+1. **Credit History**
+   Organizations can now view a full history of credit usage and grants from the organization settings page.
+
+2. **Expandable Feature Videos**
+   Product demo videos on the homepage can now be expanded to a full-screen view.
+
+3. **Dedicated Pricing Page**
+   Pricing now has its own page with clearer plan breakdowns and frequently asked questions.
+
+4. **Phone Call Scheduling Controls**
+   Recruiters can now schedule, stop, and resume candidate phone screening calls for a specific day and time slot.
+
+# Feature Updates
+
+1. **Updated Credit Usage**
+   Interview credit costs now scale with session length: 4 credits for a 20-minute interview, 8 for 40 minutes, 12 for 60 minutes, and 1 credit per phone screening call.
+
+2. **Improved Phone Screening Calls**
+   Phone screening calls now sound more natural and handle conversation more fluidly.
+
+3. **Better Link Previews**
+   Sharing Serin pages on social media now shows a proper preview image and title.
+
+4. **Job Posting Limits**
+   Serin Pro organizations can now publish up to 6 jobs at a time; limits are enforced automatically based on your plan.
+
+# Bugs Fixed
+
+- Unanswered phone screening calls were sometimes marked as "failed" instead of "no answer."
+- Phone-based pre-screening answers didn't always show as completed in the applications list.
+- The "Test Again" button on a job card sometimes failed to start a new test interview.
+- The credits menu in the navigation bar required a click instead of opening on hover.
+- Job objectives weren't visible on a job page while the job was still saved as a draft.
+
+</Update>
+
+
+<Update label="October 2026" description="Serin MCP & Performance Improvements" tags={["Serin v1.7"]}>
+
+# New Features
+
+1. **Serin MCP**
+   Connect Serin to your AI assistant (such as Claude or Cursor) to manage jobs, candidates, invites, and interviews directly from the assistant, including scheduling meetings and reviewing recordings. Candidate accounts cannot authorize these connections, as a safeguard. Learn more at [Serin MCP →](/serin-mcp/home)
+
+2. **Faster Interview Start**
+   Interviews now begin more quickly once a candidate starts their application.
+
+3. **Embeddable Job Cards**
+   Organizations can now embed a Serin job listing directly on their own website.
+
+4. **Keyboard Navigation**
+   Full keyboard navigation support added across the dashboard for improved accessibility.
+
+5. **Zoho Recruit Integration**
+   Jobs and applications can now sync with Zoho Recruit, in addition to 100Hires. Learn more at [ATS Integrations →](/ats-integrations/overview)
+
+6. **Contact Page**
+   Added a dedicated contact page to the website.
+
+# Feature Updates
+
+1. **More Reliable Interview AI**
+   The interview AI now handles custom questions, repeated questions, and interruptions more reliably, with clearer, less repetitive responses.
+
+2. **Redesigned Interview Report**
+   The interview report page was redesigned with plainer language and a cleaner layout.
+
+3. **Updated KPI Summaries**
+   KPI summaries on the Jobs, Analysis, and Organization pages were redesigned.
+
+4. **Faster Dashboard**
+   General performance improvements to dashboard load times.
+
+5. **Faster Homepage**
+   Significant loading speed improvements to the public website, especially on mobile.
+
+6. **Simplified Sign-In**
+   Sign-in is now a single-step email and password flow.
+
+7. **"Retry Evaluation" Re-Runs Full Analysis**
+   Retrying an evaluation now fully re-runs both the AI scoring and the integrity/video analysis.
+
+# Bugs Fixed
+
+- Some resumes failed to parse correctly on upload.
+- Resumes with certain email address formats weren't matched to candidates correctly.
+- Invalid or garbled work-experience dates on a resume weren't caught.
+- Setting a job's resume-match threshold to 0 wasn't properly treated as "no resume screening."
+- An audio issue was affecting interview sound quality for some candidates.
+- Interview duration wasn't always recorded correctly in the report.
+- The interview recording preview used an incorrect frame crop.
+
+</Update>
+
+
+<Update label="September 2026" description="ATS Integration, AI-Assistance Detection & Billing" tags={["Serin v1.6"]}>
+
+# New Features
+
+1. **100Hires Integration**
+   First ATS integration — jobs and applications can now sync with 100Hires. Learn more at [ATS Integrations →](/ats-integrations/overview)
+
+2. **AI-Assistance Detection**
+   The integrity section of the interview report can now flag signs of AI coaching or scripted responses, with a confidence indicator reviewers can confirm or dismiss.
+
+3. **Credit Expiry & Grants**
+   Organization credits now carry a 1-year validity period, shown clearly in the credit history.
+
+4. **Localized Pricing**
+   Pricing is now shown in the visitor's local currency.
+
+5. **Subscription Management**
+   A new plan management dialog lets admins upgrade or downgrade plans and view invoices.
+
+6. **Candidate Skills Onboarding**
+   Candidates can now select their skills as part of onboarding.
+
+7. **Pre-Screening Questions**
+   Jobs can now include pre-screening questions, answered via the application form, a phone call, or both.
+
+8. **Serin Talent Network (Early Access)**
+   Early access opened for the Serin Talent Network, a new talent discovery feature.
+
+# Feature Updates
+
+1. **Smoother Signup Flow**
+   Signup and onboarding now reliably return you to the right page after signing in.
+
+2. **Accurate Job Status Filters**
+   The Analysis page's job status filter now reflects real-time job states.
+
+3. **Serin Blog Launched**
+   A new blog launched with Product Updates, Hiring Insights, and AI Interview categories.
+
+4. **Streamlined Candidate Onboarding**
+   Simplified candidate profile fields and expanded skill categories.
+
+# Bugs Fixed
+
+- A meeting scheduling calendar was appearing clipped behind other page elements.
+- A success message after sign-in briefly appeared alongside an error message.
+- The back button on an application page returned to the wrong page.
+- Organization representatives couldn't email candidates who were already invited to a job.
+- Recruiters testing their own job listing could get permanently blocked after a failed resume screening test.
+- Report side panels lost their state when switching tabs.
+
+</Update>
+
+
+<Update label="August 2026" description="Screen Share Recording & Light Mode" tags={["Serin v1.5.3"]}>
+<Frame>
+    ![Serin v1.5 Update Image](/images/changelog/Serin_v1.5_Update_Image.png)
+  </Frame>
+# New Features
+
+1. **Screen Share Recording**
+   Candidate screens can now be recorded during interviews, in addition to the camera. Can be toggled per job.
+
+2. **Combined Recording Player**
+   Interview playback now has a single timeline covering pre-interview setup, screen share, and the live interview, with picture-in-picture viewing.
+
+3. **Job Report PDF**
+   Organizations can generate and download a full PDF report for a job covering all candidate evaluations.
+
+4. **Push Notifications**
+   Real-time notifications for candidates and recruiters on application updates and reminders.
+
+5. **Light Mode**
+   A full light theme is now available across the entire platform.
+
+6. **Report Preview from Applications List**
+   Recruiters can now preview and download an interview report directly from the applications table.
+
+7. **Primary/Alternate Job Objectives**
+   Jobs can now define a primary and alternate objective for richer AI evaluation.
+
+8. **Improved Application Table**
+   Rebuilt sorting and pagination for the applications table.
+
+# Feature Updates
+
+1. **Longer Reconnection Window**
+   Candidates now have up to 5 minutes (up from 2) to reconnect after a dropped interview connection.
+
+2. **More Reliable Recording**
+   Interview conversation history now saves periodically during the session, reducing data loss on disconnects.
+
+3. **Interview Resume Accuracy**
+   Resumed interviews now keep an accurate running timer instead of resetting.
+
+4. **Lower-Bandwidth Video**
+   Interview video quality now automatically adjusts to use less bandwidth on slow connections.
+
+5. **Optional Salary Field**
+   Salary is no longer a required field when posting a job; a fixed-salary option was also added.
+
+6. **Simpler Forgot Password Flow**
+   Streamlined the password reset experience.
+
+# Bugs Fixed
+
+- The recording player's playback phases occasionally lost sync.
+- Duplicate entries sometimes appeared in interview transcripts.
+- Draft jobs incorrectly appeared in the Analysis page.
+- Revoking one team member's invite affected the UI for other team members' invites.
+- Duplicate status badges appeared on application cards.
+- Interview counts shown on job and analysis cards were sometimes inaccurate.
+- Interview invite links didn't always expire on time.
+- Signing in with Google from a job listing didn't return you to that listing.
+- Some private file links (resumes, logos) were unreliable across environments.
+
+</Update>
+
+
+<Update label="July 2026" description="Serin Meet & Landing Page Redesign" tags={["Serin v1.5.2"]}>
+<Frame>
+    ![Serin v1.5 Update Image](/images/changelog/Serin_v1.5_Update_Image.png)
+  </Frame>
+# New Features
+
+1. **Serin Meet**
+   Serin's own built-in video meeting feature, replacing Zoom, with scheduling, a waiting room, recording, and meeting summaries.
+
+2. **Push Notifications**
+   Initial rollout of real-time notifications for application and interview updates.
+
+3. **Multi-Person Detection**
+   Interview integrity monitoring now flags when more than one person appears on camera.
+
+4. **Report Preview from Applications List**
+   Initial version of in-table report preview and download.
+
+5. **Candidates Can Reply by Email**
+   Initial rollout of inbound email replies from candidates.
+
+6. **Landing Page Redesign**
+   A redesigned homepage with a new layout and updated feature sections.
+
+7. **Updated Sign-Up & Onboarding**
+   Refreshed sign-up and onboarding screens for both candidates and recruiters.
+
+# Feature Updates
+
+1. **Zoom Removed**
+   Zoom integration fully retired in favor of Serin Meet.
+
+2. **Per-Job Screen Recording Toggle**
+   Organizations can turn screen recording on or off per job.
+
+3. **Updated Terms & Privacy Policy**
+   Refreshed legal pages with a mobile-friendly layout.
+
+4. **Redesigned Profile Page**
+   Cleaner profile page layout with city autocomplete and improved phone number entry.
+
+# Bugs Fixed
+
+- Interview room links sometimes failed to load correctly.
+- Organization invites could be sent to disposable or unintended free email domains.
+- The interview setup screen flickered when adjusting microphone settings.
+- Some invited candidates weren't properly signed in after setting a password.
+- Several report fields (time spent, question count, score) occasionally showed incorrect values.
+- The recording player's picture-in-picture view sometimes overlapped the main video.
+- Renaming an organization during onboarding could create a duplicate organization.
+- Some job type labels displayed incorrect wording after saving.
+- Interview transcript timestamps were sometimes inaccurate.
+
+</Update>
+
+
+<Update label="Late June 2026" description="Phone Reminder Calls & Public Job Marketplace" tags={["Serin v1.5.1"]}>
+<Frame>
+    ![Serin v1.5 Update Image](/images/changelog/Serin_v1.5_Update_Image.png)
+  </Frame>
+
+# New Features
+
+1. **Phone Screening Reminder Calls**
+   An AI phone agent that calls candidates to remind them about upcoming interviews or complete a phone-based pre-screen, including Hindi language support.
+
+2. **Public Jobs Marketplace**
+   Jobs are now browsable publicly without signing in.
+
+3. **Credit Analytics**
+   A new page showing organization credit usage over time.
+
+4. **Fixed Salary Option**
+   Added a fixed-salary option for job postings, alongside salary ranges.
+
+5. **Saved Jobs / Bookmarks**
+   Candidates can now bookmark job listings to revisit later.
+
+6. **Organization Invite Safeguards**
+   Organization invites now block disposable email addresses and restrict free email domains from certain roles.
+
+# Feature Updates
+
+1. **Updated Sign-In & Sign-Up**
+   A cleaner, single-page authentication experience with role-aware redirects.
+
+# Bugs Fixed
+
+- Signing in with only one connected login method sometimes failed.
+- Several edge cases in the invited-candidate signup flow were resolved.
+- Dropdown menus sometimes displayed an incorrect background color.
+- Phone number fields were difficult to edit; validation now happens after you finish typing.
+- Candidate profile images weren't loading correctly in certain views.
+
+</Update>
+
+
 <Update label="25th June, 2026" description="The Scale Update" tags={["Serin v1.5.x"]}>
 <Frame>
     ![Serin v1.5 Update Image](/images/changelog/Serin_v1.5_Update_Image.png)
