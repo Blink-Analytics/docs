@@ -1,0 +1,71 @@
+---
+title: "How Calls Work"
+description: "What happens during a reminder call or phone pre-screening — conversation flow, language, and what to expect."
+icon: "message-circle"
+---
+
+## Reminder calls
+
+When a job has no pre-screening questions, the agent places a reminder call after the candidate is invited. The purpose is straightforward: confirm the candidate received their invitation and intends to complete the interview.
+
+The call is conversational and brief. The agent:
+
+1. Introduces itself as calling on behalf of the hiring team.
+2. Confirms the candidate received their invitation link.
+3. Checks whether they plan to complete the interview.
+4. Answers basic questions about the process if the candidate asks (e.g., how long the interview takes, whether they can reschedule).
+
+The outcome of the call — whether the candidate confirmed, was unreachable, or declined — is logged to their application automatically.
+
+## Phone pre-screening calls
+
+When a job has pre-screening questions configured, the agent calls the candidate to ask those questions over the phone before they proceed to the recorded interview.
+
+The call follows the questions in the order they were set up for the job. The agent:
+
+1. Introduces itself and explains it has a few quick questions before the interview.
+2. Asks each pre-screening question in sequence.
+3. Waits for the candidate's answer before moving on.
+4. Wraps up and lets the candidate know what to expect next.
+
+The candidate's answers are transcribed and attached to their application. The hiring team can review them alongside the rest of the application before or after the recorded interview.
+
+<Warning>
+Pre-screening questions must be set up on the job before candidates are invited. The agent asks whatever questions are configured — it does not generate questions on its own.
+</Warning>
+
+## Language support
+
+Calls start in English. The agent also supports Hindi:
+
+- If the candidate responds in Hindi, the agent switches to Hindi automatically.
+- If the candidate asks to speak in Hindi, the agent switches immediately.
+- Once switched, the rest of the call continues in Hindi.
+
+If the candidate's preferred language is not supported, the agent completes the call in English and a note is added to the application.
+
+## If a call is not answered
+
+If the candidate does not answer, the agent leaves a brief voicemail (if available) explaining that it called on behalf of the hiring team and asking them to check their invitation. The application is updated to show the call was attempted but not answered.
+
+No additional attempts are made automatically. A hiring team member can place a manual follow-up call from the application if needed.
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Who does the agent say it's calling from?">
+    The agent identifies itself as calling on behalf of your hiring team and mentions the job the candidate applied for. It does not use a personal recruiter's name.
+  </Accordion>
+
+  <Accordion title="Can candidates ask questions during the call?">
+    During a reminder call, the agent can answer basic questions about the interview process. During a pre-screening call, the agent works through the screening questions first, then invites the candidate to ask broader questions about the role, company, or process — deferring to the hiring team only on specifics it doesn't have context for.
+  </Accordion>
+
+  <Accordion title="Are call recordings available?">
+    Call transcripts are attached to the candidate's application. Contact Serin support at [connect@serin-ai.com](mailto:connect@serin-ai.com) with questions about audio recordings.
+  </Accordion>
+
+  <Accordion title="What if the candidate's answers during pre-screening are unclear?">
+    If an answer is unclear, the agent asks the candidate to repeat or clarify. If it stays unclear after a couple of attempts, the agent may end the call so a recruiter can follow up directly — nothing is recorded for that question.
+  </Accordion>
+</AccordionGroup>

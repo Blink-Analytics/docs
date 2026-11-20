@@ -49,6 +49,22 @@
             ]
           },
           {
+            "group": "Serin Meet",
+            "pages": [
+              "serin-meet/overview",
+              "serin-meet/during-meeting",
+              "serin-meet/after-meeting"
+            ]
+          },
+          {
+            "group": "Phone Call Agent",
+            "pages": [
+              "phone-call-agent/overview",
+              "phone-call-agent/how-calls-work",
+              "phone-call-agent/scheduling-and-privacy"
+            ]
+          },
+          {
             "group": "ATS Integrations",
             "pages": [
               "ats-integrations/overview",
